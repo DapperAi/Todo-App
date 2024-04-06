@@ -1,21 +1,31 @@
-To make the `div` around the `DatePicker` component in the `NewTaskForm.tsx` file have a visible outline, we need to add a Tailwind CSS class that provides an outline. Since we're using Tailwind CSS for styling, we can utilize its utility classes to achieve this. The class to be added should provide a subtle outline that is visible enough for users to recognize the component's boundary without being too distracting. A suitable choice could be `ring-2 ring-gray-300`, which adds a light gray outline with a moderate thickness around the element.
+To make the task filter functional, we need to implement the following changes:
 
-Here's a step-by-step plan to implement this change:
-1. Locate the `div` element that wraps the `DatePicker` component in the `NewTaskForm.tsx` file.
-2. Add the Tailwind CSS classes `ring-2 ring-gray-300` to this `div` to create a visible outline.
+1. In `src/App.tsx`, introduce a new state variable to hold the current filter value. This will be used to determine which tasks to display based on their status.
+2. Modify the `onChange` handler for the `TaskFilter` component in `src/App.tsx` to update the new filter state variable whenever the user selects a different filter option.
+3. Update the rendering logic in `src/App.tsx` to filter the tasks based on the selected filter before passing them to the `TaskList` component. This involves filtering the `tasks` array to include only those tasks whose status matches the selected filter, except when the filter is set to "All", in which case all tasks should be displayed.
 
-Let's write the changes in the unified "git diff" syntax.
+Let's proceed with generating the diffs for these changes.
 
 ```diff
---- src/components/interface/NewTaskForm.tsx
-+++ src/components/interface/NewTaskForm.tsx
-@@ -38,7 +38,7 @@
-          </Select>
--        <div>
-+        <div className="ring-2 ring-gray-300">
-            <DatePicker
-              selected={dueDate}
-              onChange={(date) => setDueDate(date)}
+--- src/App.tsx
++++ src/App.tsx
+@@ -17,6 +17,7 @@
+ const App = () => {
+     const [tasks, setTasks] = useState<Task[]>(() => {
+     const savedTasks = loadTasksFromLocalStorage();
++    const [filter, setFilter] = useState<string>('All');
+     return savedTasks ? savedTasks : [];
+   });
+ 
+@@ -45,7 +46,12 @@
+       <NewTaskForm onSubmit={addTask} />
+-      <TaskFilter value="All" onChange={(e) => console.log(e.target.value)} />
+-      <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={deleteTask} />
++      <TaskFilter value={filter} onChange={(e) => setFilter(e.target.value)} />
++      <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />
+   </div>
+ );
+};
 ```
 
 These changes yield a fully functional program according to the instructions.

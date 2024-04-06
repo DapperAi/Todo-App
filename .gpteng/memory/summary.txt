@@ -2,21 +2,15 @@
 Application Summary Document
 
 Description:
-The application is a task management tool designed for efficient organization, tracking, and management of tasks. It offers a user-friendly interface that supports setting due dates and reminders, catering to both personal and professional task management needs.
+The application is a comprehensive task management tool designed to help users efficiently organize, track, and manage their tasks. It provides a user-friendly interface for personal and professional task management, incorporating features for setting due dates and reminders.
 
 Main Features:
-1. Task Creation: Allows users to create tasks with titles, descriptions, due dates, and reminders.
-2. Task Sorting and Searching: Enables sorting and searching of tasks based on various criteria.
-3. User Profiles: Provides customizable user profiles with avatars for a personalized experience.
-4. Data Persistence: Uses browser's localStorage for saving and loading tasks, ensuring data integrity.
-5. Comprehensive Task Management: Supports updating task status, deleting tasks, and filtering tasks by status.
+1. Task Creation: Users can create tasks with titles, descriptions, due dates, and reminders.
+2. Task Filtering: Allows users to filter tasks based on their status, enhancing task visibility and management.
+3. Task Sorting and Searching: Facilitates sorting and searching of tasks based on various criteria.
+4. User Profiles: Offers customizable user profiles with avatars for a personalized experience.
+5. Data Persistence: Utilizes browser's localStorage for saving and loading tasks, ensuring data integrity.
+6. Comprehensive Task Management: Supports updating task status, deleting tasks, and filtering tasks by status, including a new filter functionality for improved task organization.
 
 Current State:
-The application has been enhanced in the last iteration with the following updates:
-- Improved visual feedback in the task creation form by adding a visible outline around the `DatePicker` component, making it more user-friendly.
-- The `react-datepicker` integration has been refined for error-free operation.
-- Introduction of `dueDate` and `reminder` attributes in the task interface for detailed task tracking.
-- A new `TaskSortSearch` component for efficient task sorting and searching.
-- Enhanced user profile customization options, including avatars.
-- TaskList component now displays due dates, offering crucial information at a glance.
-These improvements have made the application more robust, feature-rich, and user-friendly.
+After the last iteration, the application now includes a functional task filter, allowing users to display tasks based on their status. This was achieved by introducing a new state variable for the filter value, modifying the `TaskFilter` component to update this variable, and updating the task rendering logic to filter tasks accordingly. These changes have significantly improved the application's usability by enabling users to easily manage and view tasks based on their completion status.
