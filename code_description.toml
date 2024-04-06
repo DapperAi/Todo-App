@@ -1,0 +1,16 @@
+# Description of the source code directory structure, and description of code in each source code file in the repository.
+
+[description]
+"index.html" = "The main html file having the root div inside which the entire react application is rendered"
+"src/App.css" = "CSS code defines styles for the application, including layout adjustments, logo animations on hover, and card styling, with a preference for reduced motion and responsiveness.
+"src/App.tsx" = "serves as the entry point for the application, containing a functional component named App that renders required/necessary components."
+"src/main.tsx" = "file initializes a React application with NextUI styling, rendering the App component within a NextUIProvider and applying a light theme to the main container."
+"src/index.css" = "configures Tailwind CSS for the application, including base styles, components, and utilities, to streamline and maintain a consistent design system."
+"package.json" = "Defines project dependencies and scripts for the app."
+"tsconfig.node.json" = "configures TypeScript compiler options for the application, enabling composite projects, bundler-based module resolution, and strict type checking."
+"tsconfig.json" = "sets TypeScript options for the app with ES2020 target, bundler-based module resolution, React JSX support, and strict type checking, referencing tsconfig.node.json for Node.js specifics."
+"tailwind.config.js" = "customizes Tailwind CSS for the application, extending NextUI themes, defining layout tokens, and configuring color schemes for light and dark themes."
+"postcss.config.js" = configures PostCSS plugins for the application, including Tailwind CSS for styling and Autoprefixer for automatic vendor prefixing.
+"src/components/interface/NewTaskForm.tsx" = "Component for creating a new task with title, description, and status fields."
+"src/components/interface/TaskList.tsx" = "Component that displays a list of tasks with options to update the status or delete the task."
+"src/components/interface/TaskFilter.tsx" = "Component that allows users to filter tasks by status."
