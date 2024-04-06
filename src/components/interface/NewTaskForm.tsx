@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Input, Select, SelectItem } from '@nextui-org/react';
 
+type NewTaskFormProps = {
+  onSubmit: (task: { title: string; description: string; status: string }) => void;
+};
+
 // NewTaskForm allows users to create a new task with a title, description, and status
-const NewTaskForm = ({ onSubmit }) => {
+const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('To Do');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (!title) return;
     onSubmit({ title, description, status });

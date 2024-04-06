@@ -1,8 +1,13 @@
 import React from 'react';
 import { Select, SelectItem } from '@nextui-org/react';
 
+type TaskFilterProps = {
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+};
+
 // TaskFilter allows users to filter tasks by status
-const TaskFilter = ({ value, onChange }) => {
+const TaskFilter: React.FC<TaskFilterProps> = ({ value, onChange }) => {
   return (
     <Select aria-label="Filter Tasks By Status" fullWidth value={value} onChange={onChange}>
       <SelectItem key="All" value="All">All</SelectItem>

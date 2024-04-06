@@ -1,8 +1,15 @@
 import React from 'react';
 import { Button } from '@nextui-org/react';
 
+type Task = {
+  title: string;
+  description: string;
+  status: string;
+};
+type TaskListProps = { tasks: Task[]; onUpdate: (index: number) => void; onDelete: (index: number) => void; };
+
 // TaskList displays a list of tasks with options to update status or delete
-const TaskList = ({ tasks, onUpdate, onDelete }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdate, onDelete }) => {
   return (
     <div className="space-y-4">
       {tasks.map((task, index) => (

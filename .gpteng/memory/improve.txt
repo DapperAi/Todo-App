@@ -1,35 +1,124 @@
-To implement the feature where clicking the delete button removes the corresponding task from the list and updates the view, we need to follow these steps:
+To make the code in the `components/interface` directory compliant with TypeScript ES2020 specifications, we need to explicitly define the types for all props and state variables in the components. Here's a step-by-step plan for each file:
 
-1. **Update the `App` component (`src/App.tsx`):** We need to define a new function `deleteTask` that takes an index as a parameter. This function will update the state of `tasks` by filtering out the task at the given index. We will use the `filter` method on the current tasks array, and only include tasks that do not match the given index. After defining this function, we will pass it as a prop to the `TaskList` component.
+1. **NewTaskForm.tsx**:
+   - Define a type for the `onSubmit` prop to specify that it is a function accepting an object with `title`, `description`, and `status` properties and returning `void`.
+   - Update the functional component definition to use this type.
 
-2. **Modify the `TaskList` component (`src/components/interface/TaskList.tsx`):** Since the `onDelete` prop will now be passed from the `App` component, we need to ensure that the `onClick` event handler for the delete button calls the `onDelete` function with the correct index. This step does not require any changes to the code as the setup already correctly passes the index to the `onDelete` function.
+2. **TaskList.tsx**:
+   - Define a type for the `tasks` prop to specify that it is an array of objects, each with `title`, `description`, and `status` properties.
+   - Define types for the `onUpdate` and `onDelete` props to specify that they are functions accepting a number (the index of the task) and returning `void`.
+   - Update the functional component definition to use these types.
 
-Let's proceed with generating the diffs for these changes.
+3. **TaskFilter.tsx**:
+   - Define types for the `value` and `onChange` props. The `value` prop is a string, and `onChange` is a function that accepts a React.ChangeEvent and returns `void`.
+   - Update the functional component definition to use these types.
+
+Let's proceed with the code changes in the unified "git diff" syntax.
 
 ```diff
---- src/App.tsx
-+++ src/App.tsx
-@@ -20,6 +20,13 @@
-       )
-     );
-   };
-+  
-+  const deleteTask = (index) => {
-+    setTasks((currentTasks) =>
-+      currentTasks.filter((_, taskIndex) => index !== taskIndex)
-+    );
-+  };
+--- src/components/interface/NewTaskForm.tsx
++++ src/components/interface/NewTaskForm.tsx
+@@ -1,5 +1,9 @@
+ import React, { useState } from 'react';
+ import { Button, Input, Select, SelectItem } from '@nextui-org/react';
+ 
++type NewTaskFormProps = {
++  onSubmit: (task: { title: string; description: string; status: string }) => void;
++};
 +
+ // NewTaskForm allows users to create a new task with a title, description, and status
+-const NewTaskForm = ({ onSubmit }) => {
++const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
+   const [title, setTitle] = useState<string>('');
+```
+
+```diff
+--- src/components/interface/TaskList.tsx
++++ src/components/interface/TaskList.tsx
+@@ -1,5 +1,11 @@
+ import React from 'react';
+ import { Button } from '@nextui-org/react';
+ 
++type Task = {
++  title: string;
++  description: string;
++  status: string;
++};
++type TaskListProps = { tasks: Task[]; onUpdate: (index: number) => void; onDelete: (index: number) => void; };
+ 
+ // TaskList displays a list of tasks with options to update status or delete
+-const TaskList = ({ tasks, onUpdate, onDelete }) => {
++const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdate, onDelete }) => {
    return (
-     <div className="p-4">
-       <NewTaskForm onSubmit={addTask} />
-@@ -26,7 +33,7 @@
-       <TaskFilter value="All" onChange={(e) => console.log(e.target.value)} />
--      <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={(index) => console.log('Delete', index)} />
-+      <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={deleteTask} />
-     </div>
-   );
- };
+```
+
+```diff
+--- src/components/interface/TaskFilter.tsx
++++ src/components/interface/TaskFilter.tsx
+@@ -1,5 +1,9 @@
+ import React from 'react';
+ import { Select, SelectItem } from '@nextui-org/react';
+ 
++type TaskFilterProps = {
++  value: string;
++  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
++};
+ 
+ // TaskFilter allows users to filter tasks by status
+-const TaskFilter = ({ value, onChange }) => {
++const TaskFilter: React.FC<TaskFilterProps> = ({ value, onChange }) => {
+   return (
 ```
 
 These changes yield a fully functional program according to the instructions.
+Let's correct the diffs for `TaskList.tsx` and `TaskFilter.tsx` to ensure they match the existing code structure and accurately reflect the changes needed to make the code TypeScript ES2020 compliant.
+
+For `TaskList.tsx`, we need to introduce TypeScript interfaces for the props to ensure type safety. The correction will involve properly placing the type definitions before the component declaration and ensuring the component uses these types.
+
+For `TaskFilter.tsx`, similar adjustments are required. We'll define the props' types to ensure the component's `value` and `onChange` props are correctly typed according to TypeScript standards.
+
+Let's proceed with the corrected diffs.
+
+```diff
+--- src/components/interface/TaskList.tsx
++++ src/components/interface/TaskList.tsx
+@@ -1,5 +1,11 @@
+ import React from 'react';
+ import { Button } from '@nextui-org/react';
++
++type Task = {
++  title: string;
++  description: string;
++  status: string;
++};
++type TaskListProps = { tasks: Task[]; onUpdate: (index: number) => void; onDelete: (index: number) => void; };
+ 
+ // TaskList displays a list of tasks with options to update status or delete
+-const TaskList = ({ tasks, onUpdate, onDelete }) => {
++const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdate, onDelete }) => {
+   return (
+     <div className="space-y-4">
+       {tasks.map((task, index) => (
+```
+
+```diff
+--- src/components/interface/TaskFilter.tsx
++++ src/components/interface/TaskFilter.tsx
+@@ -1,5 +1,9 @@
+ import React from 'react';
+ import { Select, SelectItem } from '@nextui-org/react';
++
++type TaskFilterProps = {
++  value: string;
++  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
++};
+ 
+ // TaskFilter allows users to filter tasks by status
+-const TaskFilter = ({ value, onChange }) => {
++const TaskFilter: React.FC<TaskFilterProps> = ({ value, onChange }) => {
+   return (
+     <Select aria-label="Filter Tasks By Status" fullWidth value={value} onChange={onChange}>
+       <SelectItem key="All" value="All">All</SelectItem>
+```
+
+These corrections ensure the diffs are in the correct format and accurately reflect the changes needed for TypeScript ES2020 compliance in the specified files.

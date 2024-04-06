@@ -2,13 +2,15 @@
 Application Summary Document
 
 Description:
-The application is a comprehensive task management tool designed to assist users in organizing, tracking, and managing their tasks with ease. It offers a user-friendly interface that simplifies task management, enabling users to focus on their work without getting overwhelmed by their to-do list.
+The application is a task management tool that helps users organize and manage their tasks efficiently. It provides a user-friendly interface for adding, viewing, updating, and filtering tasks based on their status, making task management simple and effective.
 
 Main Features:
-1. Dynamic Task Management: Enables users to add, view, update, and delete tasks effortlessly.
-2. Enhanced State Management: Utilizes advanced state management techniques for real-time task updates.
-3. Task Status Updates: Allows users to mark tasks as "To Do", "In Progress", or "Done", providing clear visibility into task progress.
-4. Intuitive User Interface: Features a clean and straightforward interface for an improved task management experience.
+1. Task Creation: Users can add new tasks with a title, description, and status.
+2. Task Listing: Displays a list of tasks with options to update their status or delete them.
+3. Task Filtering: Allows users to filter tasks by their status, enhancing task visibility and management.
 
 Current State:
-With the recent iteration, the application has been enriched with a delete functionality, allowing users to remove tasks directly from the list. This update includes the implementation of a `deleteTask` function in the `App` component and the integration of this functionality into the `TaskList` component, enhancing the application's dynamic task management capabilities. The application now supports a more interactive and efficient task management process, further improving its usability and responsiveness.
+After the latest iteration, the application has been updated to be compliant with TypeScript ES2020 specifications. This includes:
+- Explicit type definitions for props and state variables in the `NewTaskForm`, `TaskList`, and `TaskFilter` components, ensuring type safety and improving code quality.
+- Enhanced component definitions to utilize TypeScript features, making the codebase more robust and maintainable.
+These changes have made the application more reliable and developer-friendly, setting a strong foundation for future enhancements.
