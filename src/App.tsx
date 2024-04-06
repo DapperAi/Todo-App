@@ -9,6 +9,8 @@ interface Task {
   title: string;
   description: string;
   status: 'To Do' | 'In Progress' | 'Done';
+  dueDate: string;
+  reminder: boolean;
 }
 // Example usage of the components, actual implementation will require state management
 

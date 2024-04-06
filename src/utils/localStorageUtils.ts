@@ -16,4 +16,6 @@ interface Task {
   title: string;
   description: string;
   status: 'To Do' | 'In Progress' | 'Done';
+  dueDate: string;
+  reminder: boolean;
 }

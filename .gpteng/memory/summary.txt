@@ -2,17 +2,19 @@
 Application Summary Document
 
 Description:
-The application is a task management tool that helps users efficiently organize and manage their tasks. It now features enhanced data persistence, ensuring that tasks remain available even after a page refresh, thanks to the use of browser's localStorage.
+The application is a comprehensive task management tool designed to help users efficiently organize, track, and manage their tasks. With the latest updates, it now includes features for setting task due dates, reminders, sorting, searching tasks, and user profile customization with avatars, making it more versatile and user-friendly.
 
 Main Features:
-1. Task Creation: Users can add new tasks with a title, description, and status.
-2. Task Persistence: Tasks are now saved to and loaded from the browser's localStorage, preventing data loss on page refresh.
-3. Task Listing and Management: View all tasks, with options to update their status or delete them directly from the interface.
-4. Task Filtering: Users can filter tasks by their status, improving task organization and visibility.
+1. Task Creation with Due Dates and Reminders: Users can add new tasks with titles, descriptions, statuses, due dates, and reminders.
+2. Task Sorting and Searching: Enhanced capabilities to sort and search through tasks based on various criteria like title and due date.
+3. User Profiles with Avatars: Support for user profiles, allowing personalization with avatars.
+4. Task Persistence: Tasks are saved to and loaded from the browser's localStorage, ensuring data persistence across sessions.
+5. Task Management: Comprehensive task listing with options to update status, delete tasks, and filter tasks by status.
 
 Current State:
-The application has been significantly improved in the last iteration by implementing data persistence using localStorage. This ensures that tasks data is retained across page reloads, addressing the issue of data vanishing upon refreshing the page. The changes include:
-- Serialization and deserialization of tasks data for storage in localStorage.
-- Initialization of the tasks state with data loaded from localStorage upon application load.
-- Utility functions for localStorage operations to maintain clean and maintainable code.
-These enhancements have made the application more reliable and user-friendly, providing a seamless task management experience.
+After the last iteration, the application has seen significant enhancements:
+- The Task interface was updated to include `dueDate` and `reminder` attributes, and the task creation form now supports input for these new attributes.
+- A new `TaskSortSearch` component was introduced, enabling users to sort and search tasks effectively.
+- User profiles can now be personalized with avatars through the `UserProfile` component.
+- The application's codebase was meticulously updated to reflect these changes, ensuring a seamless and enriched user experience.
+These updates have transformed the application into a more robust and feature-rich task management tool.

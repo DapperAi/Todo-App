@@ -29,6 +29,14 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
         <SelectItem key="In Progress" value="In Progress">In Progress</SelectItem>
         <SelectItem key="Done" value="Done">Done</SelectItem>
       </Select>
+        <DatePicker
+          bordered
+          fullWidth
+          placeholder="Select due date"
+          value={dueDate}
+          onChange={(date) => setDueDate(date)}
+        />
+        <Checkbox checked={reminder} onChange={(e) => setReminder(e.target.checked)}>Set Reminder</Checkbox>
       <Button type="submit">Create Task</Button>
     </form>
   );
