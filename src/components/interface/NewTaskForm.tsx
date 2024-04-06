@@ -25,7 +25,7 @@ const NewTaskForm = ({ onSubmit }) => {
         <SelectItem key="In Progress" value="In Progress">In Progress</SelectItem>
         <SelectItem key="Done" value="Done">Done</SelectItem>
       </Select>
-<Button type="submit">Create Task</Button>
+      <Button type="submit">Create Task</Button>
     </form>
   );
 };

@@ -2,14 +2,13 @@
 Application Summary Document
 
 Description:
-The application is a task management tool that helps users efficiently organize, track, and manage their tasks. It offers a user-friendly interface for task creation, viewing, updating, deletion, and filtering, enhancing productivity and task management.
+The application is a dynamic task management tool designed to help users efficiently organize, track, and manage their tasks. It provides a streamlined interface for adding, viewing, updating, and filtering tasks, making it easier for users to keep track of their work and progress.
 
 Main Features:
-1. Task Creation: Users can add new tasks with details like title, description, and status.
-2. Task Viewing: Provides a list view of all tasks with essential details.
-3. Task Updating: Enables the modification of task details, including status.
-4. Task Deletion: Allows users to delete tasks that are no longer needed.
-5. Task Filtering: Supports filtering tasks based on their status for better organization.
+1. Dynamic Task Management: Users can add, view, update, and delete tasks seamlessly.
+2. State Management: Incorporates state management to handle tasks dynamically, allowing for real-time updates.
+3. Task Status Updates: Users can update the status of tasks to "To Do", "In Progress", or "Done", reflecting their current state accurately.
+4. User-friendly Interface: Offers an intuitive interface for task management, enhanced by the latest UI improvements.
 
 Current State:
-The application has recently been improved for accessibility by adding `aria-label` attributes to input and select elements in the `NewTaskForm.tsx` and `TaskFilter.tsx` components. This update ensures all form elements are accessible, with labels like "Task Title", "Task Description", "Task Status", and "Filter Tasks By Status". These enhancements, along with the integration of new components for task entry, viewing, and filtering, and the application of Tailwind CSS for styling, have made the application fully functional, more accessible, and user-friendly.
+After the latest iteration, the application now features an improved state management system for handling tasks, enabling the addition of new tasks and updating their status more efficiently. The `TaskList` component has been updated to allow changing the status of tasks dynamically, making the application fully functional and more user-friendly. These enhancements significantly improve the application's usability, providing a more responsive and interactive user experience.

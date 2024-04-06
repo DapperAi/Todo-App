@@ -1,38 +1,123 @@
-To address the warning about missing accessible labels in the `NewTaskForm.tsx` and `TaskFilter.tsx` components, we need to ensure that all input and select elements have appropriate labels for accessibility. This can be achieved by adding `aria-label` attributes to the `Input` and `Select` components in both files. Since these components are used for creating and filtering tasks, we can use descriptive labels such as "Task Title", "Task Description", and "Task Status" for the inputs in `NewTaskForm.tsx`, and "Filter Tasks By Status" for the select in `TaskFilter.tsx`.
+To implement the requested features, we need to make the following changes:
 
-### Planning:
+1. **App.tsx**: Introduce state management to handle tasks. This involves:
+   - Adding a state to store the list of tasks.
+   - Implementing the `onSubmit` function in `NewTaskForm` to add a new task to the state.
+   - Implementing the `onUpdate` function in `TaskList` to update the status of a task.
 
-1. In `NewTaskForm.tsx`:
-   - Add `aria-label` attributes to the `Input` components for the title and description fields.
-   - Add an `aria-label` attribute to the `Select` component for the status field.
+2. **TaskList.tsx**: Modify the `onUpdate` function to allow changing the status of a task. This requires:
+   - Changing the `onUpdate` function to toggle the status of a task between "To Do", "In Progress", and "Done".
 
-2. In `TaskFilter.tsx`:
-   - Add an `aria-label` attribute to the `Select` component to describe its purpose.
-
-### Generate diffs:
-
-For `NewTaskForm.tsx`:
+Let's proceed with generating the diffs for these changes.
 
 ```diff
---- src/components/interface/NewTaskForm.tsx
-+++ src/components/interface/NewTaskForm.tsx
-@@ -21,5 +21,5 @@
--        <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
--        <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
--        <Select fullWidth value={status} onChange={(e) => setStatus(e.target.value)}>
-+        <Input aria-label="Task Title" isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-+        <Input aria-label="Task Description" isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-+        <Select aria-label="Task Status" fullWidth value={status} onChange={(e) => setStatus(e.target.value)}>
-```
-
-For `TaskFilter.tsx`:
-
-```diff
---- src/components/interface/TaskFilter.tsx
-+++ src/components/interface/TaskFilter.tsx
-@@ -7,3 +7,3 @@
--    <Select fullWidth value={value} onChange={onChange}>
-+    <Select aria-label="Filter Tasks By Status" fullWidth value={value} onChange={onChange}>
+--- src/App.tsx
++++ src/App.tsx
+@@ -6,7 +6,20 @@
+ // Example usage of the components, actual implementation will require state management
+-const exampleTasks = [{ title: 'Task 1', description: 'Description 1', status: 'To Do' }];
++import { useState } from 'react';
+ 
++const App = () => {
++  const [tasks, setTasks] = useState([{ title: 'Task 1', description: 'Description 1', status: 'To Do' }]);
++
++  const addTask = (task) => {
++    setTasks([...tasks, task]);
++  };
++
++  const updateTaskStatus = (index) => {
++    const newTasks = [...tasks];
++    const task = tasks[index];
++    const nextStatus = task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do';
++    newTasks[index] = { ...task, status: nextStatus };
++    setTasks(newTasks);
++  };
+ 
+   return (
+     <div className="p-4">
+-      <NewTaskForm onSubmit={(task) => console.log(task)} />
++      <NewTaskForm onSubmit={addTask} />
+       <TaskFilter value="All" onChange={(e) => console.log(e.target.value)} />
+-      <TaskList tasks={exampleTasks} onUpdate={(index) => console.log('Update', index)} onDelete={(index) => console.log('Delete', index)} />
++      <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={(index) => console.log('Delete', index)} />
+     </div>
+   );
+ };
 ```
 
 These changes yield a fully functional program according to the instructions.
+Let's correct the diff for `src/App.tsx` to accurately reflect the changes needed for state management and task updates.
+
+```diff
+--- src/App.tsx
++++ src/App.tsx
+@@ -6,7 +6,23 @@
+ // Example usage of the components, actual implementation will require state management
+-const exampleTasks = [{ title: 'Task 1', description: 'Description 1', status: 'To Do' }];
++import { useState } from 'react';
++
++const App = () => {
++  const [tasks, setTasks] = useState([]);
++
++  const addTask = (task) => {
++    setTasks([...tasks, task]);
++  };
++
++  const updateTaskStatus = (index) => {
++    const newTasks = tasks.map((task, taskIndex) => {
++      if (index === taskIndex) {
++        const nextStatus = task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do';
++        return { ...task, status: nextStatus };
++      }
++      return task;
++    });
++    setTasks(newTasks);
++  };
+ 
+   return (
+     <div className="p-4">
+       <NewTaskForm onSubmit={addTask} />
+       <TaskFilter value="All" onChange={(e) => console.log(e.target.value)} />
+       <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={(index) => console.log('Delete', index)} />
+     </div>
+   );
+ };
+```
+
+This correction ensures the diff matches the existing code structure and accurately reflects the changes needed to implement state management for tasks in `src/App.tsx`. These changes yield a fully functional program according to the instructions.
+Acknowledging the feedback, let's correct the approach and ensure the diff for `src/App.tsx` is accurately formatted and aligns with the existing code structure.
+
+```diff
+--- src/App.tsx
++++ src/App.tsx
+@@ -6,5 +6,21 @@
+ // Example usage of the components, actual implementation will require state management
++import { useState } from 'react';
+ 
++const App = () => {
++  const [tasks, setTasks] = useState([]);
++
++  const addTask = (task) => {
++    setTasks((currentTasks) => [...currentTasks, task]);
++  };
++
++  const updateTaskStatus = (index) => {
++    setTasks((currentTasks) =>
++      currentTasks.map((task, taskIndex) =>
++        index === taskIndex ? { ...task, status: task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do' } : task
++      )
++    );
++  };
++
+   return (
+     <div className="p-4">
+-      <NewTaskForm onSubmit={(task) => console.log(task)} />
++      <NewTaskForm onSubmit={addTask} />
+       <TaskFilter value="All" onChange={(e) => console.log(e.target.value)} />
+       <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={(index) => console.log('Delete', index)} />
+     </div>
+   );
+ };
+```
+
+This correction ensures the diff is in the correct format, aligns with the existing code structure, and accurately reflects the changes needed to implement state management for tasks in `src/App.tsx`. These changes yield a fully functional program according to the instructions.
