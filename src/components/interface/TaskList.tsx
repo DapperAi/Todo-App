@@ -4,7 +4,8 @@ import { Button } from '@nextui-org/react';
 type Task = {
   title: string;
   description: string;
-  status: string;
+  status: 'To Do' | 'In Progress' | 'Done';
+  dueDate: string;
 };
 type TaskListProps = { tasks: Task[]; onUpdate: (index: number) => void; onDelete: (index: number) => void; };
 
@@ -18,6 +19,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdate, onDelete }) => {
             <h3 className="text-lg font-bold">{task.title}</h3>
             <p>{task.description}</p>
             <span>Status: {task.status}</span>
+            <p>Due Date: {task.dueDate}</p>
           </div>
           <div className="flex space-x-2">
             <Button color="secondary" onClick={() => onUpdate(index)}>Update Status</Button>

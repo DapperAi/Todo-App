@@ -1,25 +1,29 @@
-To resolve the error you're encountering with `react-datepicker` in the `NewTaskForm.tsx` file, it appears that the `value` prop of the `DatePicker` component is expecting a `string` or `undefined`, but is being provided with a `Date` object or `null`. This discrepancy in expected and provided types is causing the TypeScript error.
+To display the due date of tasks in the TaskList component, we need to modify the `TaskList.tsx` file to include the due date in the task display. Here's a step-by-step plan for the needed changes:
 
-To fix this issue, we need to adjust how we're handling the `value` prop for the `DatePicker` component. Instead of directly passing the `dueDate` state variable, which is of type `Date | null`, we should convert it to a string format that the `DatePicker` can accept, or ensure it's `undefined` when `dueDate` is `null`. However, upon reviewing the `react-datepicker` documentation and types, it's clear that `react-datepicker` actually expects a `Date` object or `null` for its `selected` prop, not `value`. This seems to be a misunderstanding of the component's API. Therefore, the correct approach is to use the `selected` prop instead of `value` and pass the `dueDate` directly to it, as it correctly handles `Date | null`.
-
-Here's the plan to fix the error:
-1. Replace the `value` prop with the `selected` prop in the `DatePicker` component.
-2. Pass the `dueDate` state variable directly to the `selected` prop without any conversion, as `react-datepicker`'s `selected` prop is designed to accept `Date | null`.
+1. Update the `Task` type in `TaskList.tsx` to include the `dueDate` property. This aligns the type definition with the `Task` interface used in `App.tsx`.
+2. Modify the JSX inside the `TaskList` component to display the due date of each task. This involves adding a new line within the task display section to show the due date.
 
 Let's implement these changes:
 
 ```diff
---- src/components/interface/NewTaskForm.tsx
-+++ src/components/interface/NewTaskForm.tsx
-@@ -39,7 +39,7 @@
-           bordered
-           fullWidth
-           placeholder="Select due date"
--          value={dueDate}
-+          selected={dueDate}
-           onChange={(date) => setDueDate(date)}
-         />
-         <Checkbox checked={reminder} onChange={(e) => setReminder(e.target.checked)}>Set Reminder</Checkbox>
+--- src/components/interface/TaskList.tsx
++++ src/components/interface/TaskList.tsx
+@@ -4,7 +4,8 @@
+ type Task = {
+   title: string;
+   description: string;
+-  status: string;
++  status: 'To Do' | 'In Progress' | 'Done';
++  dueDate: string;
+ };
+ type TaskListProps = { tasks: Task[]; onUpdate: (index: number) => void; onDelete: (index: number) => void; };
+ 
+@@ -19,6 +20,7 @@
+             <p>{task.description}</p>
+             <span>Status: {task.status}</span>
++            <p>Due Date: {task.dueDate}</p>
+           </div>
+           <div className="flex space-x-2">
 ```
 
 These changes yield a fully functional program according to the instructions.
