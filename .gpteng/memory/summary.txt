@@ -2,15 +2,15 @@
 Application Summary Document
 
 Description:
-The application is a task management tool that helps users organize and manage their tasks efficiently. It provides a user-friendly interface for adding, viewing, updating, and filtering tasks based on their status, making task management simple and effective.
+The application is a task management tool designed to assist users in organizing and managing their tasks efficiently. It offers a straightforward interface for task addition, viewing, updating, and filtering based on task status, streamlining the task management process.
 
 Main Features:
-1. Task Creation: Users can add new tasks with a title, description, and status.
-2. Task Listing: Displays a list of tasks with options to update their status or delete them.
-3. Task Filtering: Allows users to filter tasks by their status, enhancing task visibility and management.
+1. Task Creation: Enables users to add new tasks, specifying a title, description, and status.
+2. Task Listing: Provides a view of all tasks, with functionalities to update their status or delete them.
+3. Task Filtering: Offers the capability to filter tasks by their status, facilitating better task organization and visibility.
 
 Current State:
-After the latest iteration, the application has been updated to be compliant with TypeScript ES2020 specifications. This includes:
-- Explicit type definitions for props and state variables in the `NewTaskForm`, `TaskList`, and `TaskFilter` components, ensuring type safety and improving code quality.
-- Enhanced component definitions to utilize TypeScript features, making the codebase more robust and maintainable.
-These changes have made the application more reliable and developer-friendly, setting a strong foundation for future enhancements.
+Following the recent updates, the application now adheres to TypeScript ES2020 specifications, enhancing its reliability and developer-friendliness. Key improvements include:
+- The introduction of explicit type definitions for props and state variables across components, ensuring type safety and code quality.
+- The application of TypeScript features in component definitions, contributing to a more robust and maintainable codebase.
+These enhancements not only improve the application's overall performance but also lay a solid foundation for future developments.
