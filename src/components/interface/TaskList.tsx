@@ -14,7 +14,7 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
           </div>
           <div className="flex space-x-2">
             <Button color="secondary" onClick={() => onUpdate(index)}>Update Status</Button>
-            <Button color="error" onClick={() => onDelete(index)}>Delete</Button>
+            <Button color="danger" onClick={() => onDelete(index)}>Delete</Button>
           </div>
         </div>
       ))}

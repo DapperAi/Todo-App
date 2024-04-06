@@ -3,12 +3,6 @@ import NewTaskForm from './components/interface/NewTaskForm';
 import TaskList from './components/interface/TaskList';
 import TaskFilter from './components/interface/TaskFilter';
 
-function App() {
-  return (
-  <div></div>
-  );
-}
-
 // Example usage of the components, actual implementation will require state management
 const exampleTasks = [{ title: 'Task 1', description: 'Description 1', status: 'To Do' }];
 
