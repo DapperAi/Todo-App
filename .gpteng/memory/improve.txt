@@ -1,29 +1,21 @@
-To display the due date of tasks in the TaskList component, we need to modify the `TaskList.tsx` file to include the due date in the task display. Here's a step-by-step plan for the needed changes:
+To resolve the error in the `NewTaskForm.tsx` file related to the `DatePicker` component from `react-datepicker`, we need to address the issue with the `placeholder` property which is not recognized as a valid prop for the `DatePicker` component. The error message indicates that the `placeholder` property does not exist on the `DatePicker` component, which is causing the type error.
 
-1. Update the `Task` type in `TaskList.tsx` to include the `dueDate` property. This aligns the type definition with the `Task` interface used in `App.tsx`.
-2. Modify the JSX inside the `TaskList` component to display the due date of each task. This involves adding a new line within the task display section to show the due date.
+Here's a step-by-step plan to fix this issue:
 
-Let's implement these changes:
+1. Remove the `placeholder` prop from the `DatePicker` component since it's not a valid prop according to the error message. This will resolve the type error.
+2. To maintain the user experience and provide a hint to the user, we can wrap the `DatePicker` component with a label or a placeholder text outside of it. However, since the `DatePicker` does not directly support a placeholder, we might need to implement a custom solution or use styling to achieve a similar effect. For simplicity and to directly address the error, we'll just remove the `placeholder` prop in this step.
+
+Let's proceed with the necessary code change:
 
 ```diff
---- src/components/interface/TaskList.tsx
-+++ src/components/interface/TaskList.tsx
-@@ -4,7 +4,8 @@
- type Task = {
-   title: string;
-   description: string;
--  status: string;
-+  status: 'To Do' | 'In Progress' | 'Done';
-+  dueDate: string;
- };
- type TaskListProps = { tasks: Task[]; onUpdate: (index: number) => void; onDelete: (index: number) => void; };
- 
-@@ -19,6 +20,7 @@
-             <p>{task.description}</p>
-             <span>Status: {task.status}</span>
-+            <p>Due Date: {task.dueDate}</p>
-           </div>
-           <div className="flex space-x-2">
+--- src/components/interface/NewTaskForm.tsx
++++ src/components/interface/NewTaskForm.tsx
+@@ -38,5 +38,4 @@
+         <DatePicker
+-          placeholder="Select due date"
+           selected={dueDate}
+           onChange={(date) => setDueDate(date)}
+         />
 ```
 
 These changes yield a fully functional program according to the instructions.

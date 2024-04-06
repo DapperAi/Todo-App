@@ -36,9 +36,6 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
           <SelectItem key="Done" value="Done">Done</SelectItem>
         </Select>
         <DatePicker
-          border
-          fullWidth
-          placeholder="Select due date"
           selected={dueDate}
           onChange={(date) => setDueDate(date)}
         />
