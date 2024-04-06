@@ -1,87 +1,25 @@
-To resolve the error `Cannot find name 'DatePicker'.ts` in the `NewTaskForm.tsx` file and to use a default React component library's calendar component for assigning dates to the task, we need to follow these steps:
+To resolve the error you're encountering with `react-datepicker` in the `NewTaskForm.tsx` file, it appears that the `value` prop of the `DatePicker` component is expecting a `string` or `undefined`, but is being provided with a `Date` object or `null`. This discrepancy in expected and provided types is causing the TypeScript error.
 
-1. **Install a React Calendar Component**: Since the NextUI library does not include a `DatePicker` component, we will use the `react-datepicker` package, which is a widely used and flexible date picker for React.
+To fix this issue, we need to adjust how we're handling the `value` prop for the `DatePicker` component. Instead of directly passing the `dueDate` state variable, which is of type `Date | null`, we should convert it to a string format that the `DatePicker` can accept, or ensure it's `undefined` when `dueDate` is `null`. However, upon reviewing the `react-datepicker` documentation and types, it's clear that `react-datepicker` actually expects a `Date` object or `null` for its `selected` prop, not `value`. This seems to be a misunderstanding of the component's API. Therefore, the correct approach is to use the `selected` prop instead of `value` and pass the `dueDate` directly to it, as it correctly handles `Date | null`.
 
-2. **Import the `react-datepicker` Component**: After installing the `react-datepicker` package, we need to import the `DatePicker` component from `react-datepicker` at the top of the `NewTaskForm.tsx` file.
+Here's the plan to fix the error:
+1. Replace the `value` prop with the `selected` prop in the `DatePicker` component.
+2. Pass the `dueDate` state variable directly to the `selected` prop without any conversion, as `react-datepicker`'s `selected` prop is designed to accept `Date | null`.
 
-3. **Add State for `dueDate` and `reminder`**: The form also needs to manage the state for the `dueDate` and whether a reminder is set. This involves initializing state variables for `dueDate` and `reminder` using React's `useState` hook.
-
-4. **Update the `onSubmit` Prop Type**: The `onSubmit` prop type in `NewTaskFormProps` needs to be updated to include the `dueDate` and `reminder` fields, reflecting the additional data being passed to the parent component upon form submission.
-
-5. **Update the `package.json` File**: Add the `react-datepicker` package to the `dependencies` section of the `package.json` file to ensure it is installed with the project.
-
-Let's proceed with generating the diffs for these changes.
+Let's implement these changes:
 
 ```diff
 --- src/components/interface/NewTaskForm.tsx
 +++ src/components/interface/NewTaskForm.tsx
-@@ -1,4 +1,5 @@
- import React, { useState } from 'react';
-+import DatePicker from 'react-datepicker';
- import { Button, Checkbox, Input, Select, SelectItem } from '@nextui-org/react';
- import 'react-datepicker/dist/react-datepicker.css';
- 
-@@ -4,7 +5,9 @@
-   onSubmit: (task: { title: string; description: string; status: string }) => void;
- };
- 
-+type Task = { title: string; description: string; status: string; dueDate: Date | null; reminder: boolean };
-+
- // NewTaskForm allows users to create a new task with a title, description, and status
- const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
-   const [title, setTitle] = useState('');
-@@ -12,6 +15,8 @@
-   const [status, setStatus] = useState('To Do');
-+  const [dueDate, setDueDate] = useState<Date | null>(null);
-+  const [reminder, setReminder] = useState(false);
- 
-   const handleSubmit = (e: { preventDefault: () => void; }) => {
-     e.preventDefault();
-@@ -16,7 +21,7 @@
-     onSubmit({ title, description, status });
-     setTitle('');
-     setDescription('');
--    setStatus('To Do');
-+    setStatus('To Do'); setDueDate(null); setReminder(false);
-   };
- 
-   return (
-@@ -23,7 +28,7 @@
-         <Input aria-label="Task Title" isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-         <Input aria-label="Task Description" isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-         <Select aria-label="Task Status" fullWidth value={status} onChange={(e) => setStatus(e.target.value)}>
--        <SelectItem key="To Do" value="To Do">To Do</SelectItem>
-+        <SelectItem key="To Do" value="To Do">To Do</SelectItem>
-         <SelectItem key="In Progress" value="In Progress">In Progress</SelectItem>
-         <SelectItem key="Done" value="Done">Done</SelectItem>
-       </Select>
-```
-
-```diff
---- package.json
-+++ package.json
-@@ -16,6 +16,7 @@
-     "react": "^18.2.0",
-     "react-dom": "^18.2.0",
-+    "react-datepicker": "^4.8.0",
-     "@nextui-org/react": "^2.2.9",
-     "framer-motion": "^11.0.8"
-```
-
-These changes yield a fully functional program according to the instructions.
-Let's correct the diff for the `package.json` file to properly include the `react-datepicker` dependency in the correct format.
-
-```diff
---- package.json
-+++ package.json
-@@ -13,6 +13,7 @@
-     "@nextui-org/react": "^2.2.9",
-     "framer-motion": "^11.0.8",
-     "react": "^18.2.0",
-+    "react-datepicker": "^4.8.0",
-     "react-dom": "^18.2.0"
-   },
-   "devDependencies": {
+@@ -39,7 +39,7 @@
+           bordered
+           fullWidth
+           placeholder="Select due date"
+-          value={dueDate}
++          selected={dueDate}
+           onChange={(date) => setDueDate(date)}
+         />
+         <Checkbox checked={reminder} onChange={(e) => setReminder(e.target.checked)}>Set Reminder</Checkbox>
 ```
 
 These changes yield a fully functional program according to the instructions.
