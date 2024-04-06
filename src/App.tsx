@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
-interface Task {
-  title: string;
-  description: string;
-  status: 'To Do' | 'In Progress' | 'Done';
-}
+import React, { useState, useEffect } from 'react';
+import { saveTasksToLocalStorage, loadTasksFromLocalStorage } from './utils/localStorageUtils';
 
 import NewTaskForm from './components/interface/NewTaskForm';
 import TaskList from './components/interface/TaskList';
 import TaskFilter from './components/interface/TaskFilter';
 
+interface Task {
+  title: string;
+  description: string;
+  status: 'To Do' | 'In Progress' | 'Done';
+}
 // Example usage of the components, actual implementation will require state management
 
 const App = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const savedTasks = loadTasksFromLocalStorage();
+    return savedTasks ? savedTasks : [];
+  });
 
-  const addTask = (task) => {
+  useEffect(() => {
+    saveTasksToLocalStorage(tasks);
+  }, [tasks]);
+
+  const addTask = (task: Task) => {
     setTasks((currentTasks) => [...currentTasks, task]);
   };
 
-  const updateTaskStatus = (index) => {
+  const updateTaskStatus = (index: number) => {
     setTasks((currentTasks) =>
       currentTasks.map((task: Task, taskIndex: number) =>
         index === taskIndex ? { ...task, status: task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do' } : task
@@ -26,7 +34,7 @@ const App = () => {
     );
   };
   
-  const deleteTask = (index) => {
+  const deleteTask = (index: number) => {
     setTasks((currentTasks) =>
       currentTasks.filter((_, taskIndex) => index !== taskIndex)
     );

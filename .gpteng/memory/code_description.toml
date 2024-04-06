@@ -14,3 +14,4 @@
 "src/components/interface/NewTaskForm.tsx" = "Component for creating a new task with title, description, and status fields."
 "src/components/interface/TaskList.tsx" = "Component that displays a list of tasks with options to update the status or delete the task."
 "src/components/interface/TaskFilter.tsx" = "Component that allows users to filter tasks by status."
+"src/utils/localStorageUtils.ts" = "Utility functions for handling localStorage operations, specifically for saving and loading tasks."

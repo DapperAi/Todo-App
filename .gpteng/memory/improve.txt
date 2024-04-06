@@ -1,92 +1,102 @@
-To update the data types of the variables in `App.tsx` to be compliant with TypeScript ES2020 specifications, we need to follow these steps:
+To address the issue of data vanishing from the task list upon refreshing the page, we need to implement a mechanism to persist the tasks data across page reloads. The most straightforward way to achieve this is by using the browser's localStorage to store the tasks data. Here's a step-by-step plan to implement this:
 
-1. Define an interface for the task object to specify the expected structure of a task. This interface will include `title`, `description`, and `status` fields.
-2. Update the `useState` hook for `tasks` to use this interface, making it clear that `tasks` is an array of objects conforming to the task interface.
-3. Specify the type for the `task` parameter in the `addTask` function to ensure it matches the task interface.
-4. Specify the type for the `index` parameter in both the `updateTaskStatus` and `deleteTask` functions to ensure it's a number, as it represents the index of the task in the array.
+1. **Persisting Tasks to localStorage**: Whenever tasks are added, updated, or deleted, we'll serialize the current state of tasks and save it to localStorage. This will be done in the `addTask`, `updateTaskStatus`, and `deleteTask` functions in the `App.tsx` file.
 
-Let's proceed with generating the diffs for these changes.
+2. **Retrieving Tasks from localStorage on App Initialization**: When the application loads (i.e., when the `App` component mounts), we'll check if there are any tasks saved in localStorage. If so, we'll deserialize this data and initialize the tasks state with it. This logic will be added to the `App.tsx` file, inside the `useState` hook for initializing the tasks state.
+
+3. **Utility Functions for localStorage Operations**: To keep the code clean and maintainable, we'll create utility functions for saving to and loading from localStorage. These functions will handle serialization and deserialization of the tasks array.
+
+Let's proceed with the code changes.
 
 ```diff
 --- src/App.tsx
 +++ src/App.tsx
-@@ -1,4 +1,9 @@
--import React, { useState } from 'react';
-+import React, { useState, FC } from 'react';
+@@ -1,5 +1,6 @@
+ import React, { useState, useEffect } from 'react';
++import { saveTasksToLocalStorage, loadTasksFromLocalStorage } from './utils/localStorageUtils';
+ interface Task {
+   title: string;
+   description: string;
+@@ -14,7 +15,12 @@
+ 
+ const App = () => {
+-  const [tasks, setTasks] = useState<Task[]>([]);
++  const [tasks, setTasks] = useState<Task[]>(() => {
++    const savedTasks = loadTasksFromLocalStorage();
++    return savedTasks ? savedTasks : [];
++  });
++  
++  useEffect(() => saveTasksToLocalStorage(tasks), [tasks]);
+ 
+   const addTask = (task: Task) => {
+     setTasks((currentTasks) => [...currentTasks, task]);
+@@ -46,3 +52,4 @@
+ 
+ export default App;
+```
+
+```diff
+--- /dev/null
++++ src/utils/localStorageUtils.ts
+@@ -0,0 +1,20 @@
++// Utility functions for localStorage operations
++
++export const saveTasksToLocalStorage = (tasks: Task[]) => {
++  localStorage.setItem('tasks', JSON.stringify(tasks));
++};
++
++export const loadTasksFromLocalStorage = (): Task[] | null => {
++  const tasksJSON = localStorage.getItem('tasks');
++  if (tasksJSON) {
++    return JSON.parse(tasksJSON);
++  }
++  return null;
++};
 +
 +interface Task {
 +  title: string;
 +  description: string;
 +  status: 'To Do' | 'In Progress' | 'Done';
 +}
- 
- const App: FC = () => {
--  const [tasks, setTasks] = useState([]);
-+  const [tasks, setTasks] = useState<Task[]>([]);
- 
--  const addTask = (task) => {
-+  const addTask = (task: Task) => {
-     setTasks((currentTasks) => [...currentTasks, task]);
-   };
- 
--  const updateTaskStatus = (index) => {
-+  const updateTaskStatus = (index: number) => {
-     setTasks((currentTasks) =>
-       currentTasks.map((task, taskIndex) =>
-         index === taskIndex ? { ...task, status: task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do' } : task
-       )
-     );
-   };
-   
--  const deleteTask = (index) => {
-+  const deleteTask = (index: number) => {
-     setTasks((currentTasks) =>
-       currentTasks.filter((_, taskIndex) => index !== taskIndex)
-     );
-   };
+```
+
+```diff
+--- code_description.toml
++++ code_description.toml
+@@ -15,3 +15,4 @@
+ "src/components/interface/TaskList.tsx" = "Component that displays a list of tasks with options to update the status or delete the task."
+ "src/components/interface/TaskFilter.tsx" = "Component that allows users to filter tasks by status."
++"src/utils/localStorageUtils.ts" = "Utility functions for handling localStorage operations, specifically for saving and loading tasks."
 ```
 
 These changes yield a fully functional program according to the instructions.
-Let's correct the format for the diffs to ensure they accurately reflect the changes needed in `src/App.tsx` for updating the data types of variables to be compliant with TypeScript ES2020 specifications.
+Let's correct the diffs for the `src/App.tsx` file, ensuring they match the existing code structure and content accurately. We'll adjust the import statement and the initialization of the `useState` hook for tasks to include the logic for loading tasks from localStorage, and we'll also add the `useEffect` hook for saving tasks to localStorage.
 
 ```diff
 --- src/App.tsx
 +++ src/App.tsx
-@@ -1,4 +1,10 @@
- import React, { useState } from 'react';
-+interface Task {
-+  title: string;
-+  description: string;
-+  status: 'To Do' | 'In Progress' | 'Done';
-+}
-+
- import NewTaskForm from './components/interface/NewTaskForm';
- import TaskList from './components/interface/TaskList';
- import TaskFilter from './components/interface/TaskFilter';
-@@ -8,7 +14,7 @@
+@@ -1,4 +1,5 @@
+-import React, { useState } from 'react';
++import React, { useState, useEffect } from 'react';
++import { saveTasksToLocalStorage, loadTasksFromLocalStorage } from './utils/localStorageUtils';
+ interface Task {
+   title: string;
+   description: string;
+@@ -14,7 +15,13 @@
  
  const App = () => {
--  const [tasks, setTasks] = useState([]);
-+  const [tasks, setTasks] = useState<Task[]>([]);
- 
-   const addTask = (task) => {
-     setTasks((currentTasks) => [...currentTasks, task]);
-@@ -11,7 +17,7 @@
- 
-   const updateTaskStatus = (index) => {
-     setTasks((currentTasks) =>
--      currentTasks.map((task, taskIndex) =>
-+      currentTasks.map((task: Task, taskIndex: number) =>
-         index === taskIndex ? { ...task, status: task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do' } : task
-       )
-     );
-@@ -23,7 +29,7 @@
-     );
-   };
- 
--  
+-  const [tasks, setTasks] = useState<Task[]>([]);
++  const [tasks, setTasks] = useState<Task[]>(() => {
++    const savedTasks = loadTasksFromLocalStorage();
++    return savedTasks ? savedTasks : [];
++  });
 +
-   return (
-     <div className="p-4">
-       <NewTaskForm onSubmit={addTask} />
++  useEffect(() => {
++    saveTasksToLocalStorage(tasks);
++  }, [tasks]);
+ 
+   const addTask = (task: Task) => {
+     setTasks((currentTasks) => [...currentTasks, task]);
 ```
+
+This correction ensures that the diff accurately reflects changes to the `src/App.tsx` file, including the addition of `useEffect` and the corrected import statement for `useState` and `useEffect`, as well as the new import for the localStorage utility functions. These changes yield a fully functional program according to the instructions.
