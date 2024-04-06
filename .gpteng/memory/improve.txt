@@ -1,23 +1,38 @@
-To address the errors in the `NewTaskForm.tsx` file, we need to make the following changes:
+To address the warning about missing accessible labels in the `NewTaskForm.tsx` and `TaskFilter.tsx` components, we need to ensure that all input and select elements have appropriate labels for accessibility. This can be achieved by adding `aria-label` attributes to the `Input` and `Select` components in both files. Since these components are used for creating and filtering tasks, we can use descriptive labels such as "Task Title", "Task Description", and "Task Status" for the inputs in `NewTaskForm.tsx`, and "Filter Tasks By Status" for the select in `TaskFilter.tsx`.
 
-1. Remove the `auto` prop from the `Button` component. The `auto` prop is not a recognized prop for the `Button` component in the `@nextui-org/react` library, which is causing the error.
-2. Remove the `bordered` prop from the `Input` components. Similar to the `auto` prop issue, the `bordered` prop is not recognized for the `Input` component in the `@nextui-org/react` library.
+### Planning:
 
-Let's proceed with generating the diffs for these changes.
+1. In `NewTaskForm.tsx`:
+   - Add `aria-label` attributes to the `Input` components for the title and description fields.
+   - Add an `aria-label` attribute to the `Select` component for the status field.
+
+2. In `TaskFilter.tsx`:
+   - Add an `aria-label` attribute to the `Select` component to describe its purpose.
+
+### Generate diffs:
+
+For `NewTaskForm.tsx`:
 
 ```diff
 --- src/components/interface/NewTaskForm.tsx
 +++ src/components/interface/NewTaskForm.tsx
-@@ -20,7 +20,7 @@
-21       <Input isClearable={true} bordered fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-22       <Input isClearable={true} bordered={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
--28       <Button auto type="submit">Create Task</Button>
-+28       <Button type="submit">Create Task</Button>
-@@ -21,2 +21,2 @@
--21       <Input isClearable={true} bordered fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
--22       <Input isClearable={true} bordered={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-+21       <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-+22       <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+@@ -21,5 +21,5 @@
+-        <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+-        <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+-        <Select fullWidth value={status} onChange={(e) => setStatus(e.target.value)}>
++        <Input aria-label="Task Title" isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
++        <Input aria-label="Task Description" isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
++        <Select aria-label="Task Status" fullWidth value={status} onChange={(e) => setStatus(e.target.value)}>
+```
+
+For `TaskFilter.tsx`:
+
+```diff
+--- src/components/interface/TaskFilter.tsx
++++ src/components/interface/TaskFilter.tsx
+@@ -7,3 +7,3 @@
+-    <Select fullWidth value={value} onChange={onChange}>
++    <Select aria-label="Filter Tasks By Status" fullWidth value={value} onChange={onChange}>
 ```
 
 These changes yield a fully functional program according to the instructions.

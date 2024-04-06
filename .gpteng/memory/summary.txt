@@ -2,14 +2,14 @@
 Application Summary Document
 
 Description:
-The application is a comprehensive task management tool designed to assist users in organizing and tracking their tasks with ease. It provides a user-friendly interface for creating, viewing, updating, and deleting tasks, as well as filtering them based on their current status.
+The application is a task management tool that helps users efficiently organize, track, and manage their tasks. It offers a user-friendly interface for task creation, viewing, updating, deletion, and filtering, enhancing productivity and task management.
 
 Main Features:
-1. Task Creation: Enables users to add new tasks by specifying a title, description, and status.
-2. Task Viewing: Displays a list of tasks with details such as title, description, and status.
-3. Task Updating: Allows users to modify the status of their tasks as needed.
-4. Task Deletion: Users can remove tasks that are no longer necessary.
-5. Task Filtering: Offers the ability to filter tasks by their status (All, To Do, In Progress, Done).
+1. Task Creation: Users can add new tasks with details like title, description, and status.
+2. Task Viewing: Provides a list view of all tasks with essential details.
+3. Task Updating: Enables the modification of task details, including status.
+4. Task Deletion: Allows users to delete tasks that are no longer needed.
+5. Task Filtering: Supports filtering tasks based on their status for better organization.
 
 Current State:
-Following the latest iteration, the application has been enhanced with the addition of a New Task Form Component for task entry, a Task List Component for presenting tasks, and a Task Filter Component for status-based filtering. The App Component integrates these new features seamlessly. The recent code adjustments, including the removal of unrecognized props from the `NewTaskForm.tsx` file, have rectified errors and contributed to the application's functionality and user experience. The use of Tailwind CSS for styling further improves the interface, making the application fully operational and more user-friendly.
+The application has recently been improved for accessibility by adding `aria-label` attributes to input and select elements in the `NewTaskForm.tsx` and `TaskFilter.tsx` components. This update ensures all form elements are accessible, with labels like "Task Title", "Task Description", "Task Status", and "Filter Tasks By Status". These enhancements, along with the integration of new components for task entry, viewing, and filtering, and the application of Tailwind CSS for styling, have made the application fully functional, more accessible, and user-friendly.

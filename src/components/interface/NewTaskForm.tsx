@@ -18,14 +18,14 @@ const NewTaskForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-21       <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-22       <Input isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-      <Select fullWidth value={status} onChange={(e) => setStatus(e.target.value)}>
+        <Input aria-label="Task Title" isClearable={true} fullWidth color="primary" size="lg" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Input aria-label="Task Description" isClearable={true} fullWidth color="primary" size="lg" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+        <Select aria-label="Task Status" fullWidth value={status} onChange={(e) => setStatus(e.target.value)}>
         <SelectItem key="To Do" value="To Do">To Do</SelectItem>
         <SelectItem key="In Progress" value="In Progress">In Progress</SelectItem>
         <SelectItem key="Done" value="Done">Done</SelectItem>
       </Select>
-28       <Button type="submit">Create Task</Button>
+<Button type="submit">Create Task</Button>
     </form>
   );
 };
