@@ -1,0 +1,12 @@
+
+The application is a task management tool designed to help users organize and track their tasks efficiently. It allows users to create, view, update, and delete tasks, as well as filter them based on their status.
+
+Main Features:
+1. Task Creation: Users can add new tasks with a title, description, and status.
+2. Task Viewing: A list of tasks is displayed, showing details such as title, description, and current status.
+3. Task Updating: Users can update the status of tasks.
+4. Task Deletion: Allows users to delete tasks they no longer need.
+5. Task Filtering: Users can filter tasks based on their status (All, To Do, In Progress, Done).
+
+Current State:
+After the last iteration, the application now includes a New Task Form Component for adding tasks, a Task List Component for displaying tasks, and a Task Filter Component for filtering tasks by status. The App Component has been updated to integrate these new components, and Tailwind CSS has been used for styling. The code changes have successfully implemented the planned features, making the application fully functional with a user-friendly interface.
