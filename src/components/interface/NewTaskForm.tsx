@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { Button, Input, Select, SelectItem } from '@nextui-org/react';
+import DatePicker from 'react-datepicker';
+import { Button, Checkbox, Input, Select, SelectItem } from '@nextui-org/react';
 
 type NewTaskFormProps = {
   onSubmit: (task: { title: string; description: string; status: string }) => void;
 };
+
+type Task = { title: string; description: string; status: string; dueDate: Date | null; reminder: boolean };
 
 // NewTaskForm allows users to create a new task with a title, description, and status
 const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('To Do');
+  const [dueDate, setDueDate] = useState<Date | null>(null);
+  const [reminder, setReminder] = useState(false);
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -17,7 +22,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
     onSubmit({ title, description, status });
     setTitle('');
     setDescription('');
-    setStatus('To Do');
+    setStatus('To Do'); setDueDate(null); setReminder(false);
   };
 
   return (

@@ -2,19 +2,19 @@
 Application Summary Document
 
 Description:
-The application is a comprehensive task management tool designed to help users efficiently organize, track, and manage their tasks. With the latest updates, it now includes features for setting task due dates, reminders, sorting, searching tasks, and user profile customization with avatars, making it more versatile and user-friendly.
+The application is a task management tool that enables users to organize, track, and manage their tasks with enhanced features. It supports setting due dates and reminders for tasks, making it a versatile tool for personal and professional use.
 
 Main Features:
-1. Task Creation with Due Dates and Reminders: Users can add new tasks with titles, descriptions, statuses, due dates, and reminders.
-2. Task Sorting and Searching: Enhanced capabilities to sort and search through tasks based on various criteria like title and due date.
-3. User Profiles with Avatars: Support for user profiles, allowing personalization with avatars.
-4. Task Persistence: Tasks are saved to and loaded from the browser's localStorage, ensuring data persistence across sessions.
-5. Task Management: Comprehensive task listing with options to update status, delete tasks, and filter tasks by status.
+1. Task Creation: Users can create tasks with titles, descriptions, statuses, due dates, and reminders.
+2. Task Sorting and Searching: Features to sort and search tasks based on various criteria.
+3. User Profiles: Support for customizable user profiles with avatars.
+4. Data Persistence: Utilizes browser's localStorage for saving and loading tasks, ensuring data persistence.
+5. Comprehensive Task Management: Allows for updating task status, deleting tasks, and filtering by status.
 
 Current State:
-After the last iteration, the application has seen significant enhancements:
-- The Task interface was updated to include `dueDate` and `reminder` attributes, and the task creation form now supports input for these new attributes.
-- A new `TaskSortSearch` component was introduced, enabling users to sort and search tasks effectively.
-- User profiles can now be personalized with avatars through the `UserProfile` component.
-- The application's codebase was meticulously updated to reflect these changes, ensuring a seamless and enriched user experience.
-These updates have transformed the application into a more robust and feature-rich task management tool.
+The application has been significantly improved with the latest iteration:
+- Integration of `react-datepicker` for selecting due dates in the task creation form.
+- Enhanced task interface to include `dueDate` and `reminder` attributes.
+- Introduction of a `TaskSortSearch` component for efficient task sorting and searching.
+- Addition of user profile customization with avatars.
+- Codebase updates for a seamless user experience, making it a more robust and feature-rich task management tool.
