@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Input, Button } from "@nextui-org/react";
 
 // UserAuth handles user login and registration
 const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
@@ -16,10 +17,12 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   return (
     <div className="p-4">
       <form onSubmit={handleAuth}>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-        <button type="submit">{isLoginMode ? 'Login' : 'Register'}</button>
-        <button type="button" onClick={() => setIsLoginMode(!isLoginMode)}>
+        <Input clearable bordered placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input clearable bordered type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Button type="submit" color="primary" ghost>
+          {isLoginMode ? "Login" : "Register"}
+        </Button>
+        <Button type="button" color="secondary" ghost onClick={() => setIsLoginMode(!isLoginMode)}>
           {isLoginMode ? 'Switch to Register' : 'Switch to Login'}
         </button>
       </form>

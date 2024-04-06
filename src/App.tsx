@@ -4,6 +4,7 @@ import { saveTasksToLocalStorage, loadTasksFromLocalStorage } from './utils/loca
 import NewTaskForm from './components/interface/NewTaskForm';
 import TaskList from './components/interface/TaskList';
 import TaskFilter from './components/interface/TaskFilter';
+import UserAuth from './components/interface/UserAuth';
 
 export interface Task {
   title: string;
@@ -50,15 +51,14 @@ const App = () => {
       {!isAuthenticated ? (
         <UserAuth onAuthSuccess={() => setIsAuthenticated(true)} />
       ) : (
-        <>
+        <div>
           <NewTaskForm onSubmit={addTask} />
-        </>
-      <TaskFilter value={filter} onChange={(e) => setFilter(e.target.value)} />
-      <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />
+          <TaskFilter value={filter} onChange={(e) => setFilter(e.target.value)} />
+          <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />
+        </div>
+      )}
     </div>
-    </>
-  );
-};
-
+  )
+}
 
 export default App;
