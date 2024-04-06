@@ -2,13 +2,13 @@
 Application Summary Document
 
 Description:
-The application is a dynamic task management tool designed to help users efficiently organize, track, and manage their tasks. It provides a streamlined interface for adding, viewing, updating, and filtering tasks, making it easier for users to keep track of their work and progress.
+The application is a comprehensive task management tool designed to assist users in organizing, tracking, and managing their tasks with ease. It offers a user-friendly interface that simplifies task management, enabling users to focus on their work without getting overwhelmed by their to-do list.
 
 Main Features:
-1. Dynamic Task Management: Users can add, view, update, and delete tasks seamlessly.
-2. State Management: Incorporates state management to handle tasks dynamically, allowing for real-time updates.
-3. Task Status Updates: Users can update the status of tasks to "To Do", "In Progress", or "Done", reflecting their current state accurately.
-4. User-friendly Interface: Offers an intuitive interface for task management, enhanced by the latest UI improvements.
+1. Dynamic Task Management: Enables users to add, view, update, and delete tasks effortlessly.
+2. Enhanced State Management: Utilizes advanced state management techniques for real-time task updates.
+3. Task Status Updates: Allows users to mark tasks as "To Do", "In Progress", or "Done", providing clear visibility into task progress.
+4. Intuitive User Interface: Features a clean and straightforward interface for an improved task management experience.
 
 Current State:
-After the latest iteration, the application now features an improved state management system for handling tasks, enabling the addition of new tasks and updating their status more efficiently. The `TaskList` component has been updated to allow changing the status of tasks dynamically, making the application fully functional and more user-friendly. These enhancements significantly improve the application's usability, providing a more responsive and interactive user experience.
+With the recent iteration, the application has been enriched with a delete functionality, allowing users to remove tasks directly from the list. This update includes the implementation of a `deleteTask` function in the `App` component and the integration of this functionality into the `TaskList` component, enhancing the application's dynamic task management capabilities. The application now supports a more interactive and efficient task management process, further improving its usability and responsiveness.

@@ -19,12 +19,19 @@ const App = () => {
       )
     );
   };
+  
+  const deleteTask = (index) => {
+    setTasks((currentTasks) =>
+      currentTasks.filter((_, taskIndex) => index !== taskIndex)
+    );
+  };
+
 
   return (
     <div className="p-4">
       <NewTaskForm onSubmit={addTask} />
       <TaskFilter value="All" onChange={(e) => console.log(e.target.value)} />
-      <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={(index) => console.log('Delete', index)} />
+      <TaskList tasks={tasks} onUpdate={updateTaskStatus} onDelete={deleteTask} />
     </div>
   );
 };
