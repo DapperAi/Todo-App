@@ -15,9 +15,9 @@ export interface Task {
 // Example usage of the components, actual implementation will require state management
 
 const App = () => {
+  const [filter, setFilter] = useState<string>('All');
   const [tasks, setTasks] = useState<Task[]>(() => {
     const savedTasks = loadTasksFromLocalStorage();
-    const [filter, setFilter] = useState<string>('All');
     return savedTasks ? savedTasks : [];
   });
 
