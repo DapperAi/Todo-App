@@ -17,3 +17,4 @@
 "src/utils/localStorageUtils.ts" = "Utility functions for handling localStorage operations, specifically for saving and loading tasks."
 "src/components/interface/TaskSortSearch.tsx" = "Component for sorting and searching tasks."
 "src/components/interface/UserProfile.tsx" = "Component for displaying user profiles with avatars."
+"src/components/interface/UserAuth.tsx" = "Component for handling user authentication, including login and registration forms."

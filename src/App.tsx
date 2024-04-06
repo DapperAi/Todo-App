@@ -16,6 +16,7 @@ export interface Task {
 
 const App = () => {
   const [filter, setFilter] = useState<string>('All');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [tasks, setTasks] = useState<Task[]>(() => {
     const savedTasks = loadTasksFromLocalStorage();
     return savedTasks ? savedTasks : [];
@@ -46,10 +47,16 @@ const App = () => {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <NewTaskForm onSubmit={addTask} />
+      {!isAuthenticated ? (
+        <UserAuth onAuthSuccess={() => setIsAuthenticated(true)} />
+      ) : (
+        <>
+          <NewTaskForm onSubmit={addTask} />
+        </>
       <TaskFilter value={filter} onChange={(e) => setFilter(e.target.value)} />
       <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />
     </div>
+    </>
   );
 };
 

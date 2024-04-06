@@ -2,15 +2,15 @@
 Application Summary Document
 
 Description:
-The application is a comprehensive task management tool designed to help users efficiently organize, track, and manage their tasks. It provides a user-friendly interface for personal and professional task management, incorporating features for setting due dates and reminders.
+The application is a task management tool that now supports user authentication, allowing users to securely log in or register before managing their tasks. It provides a user-friendly interface for personal and professional task management, with features for creating, updating, and deleting tasks, as well as setting due dates and reminders.
 
 Main Features:
-1. Task Creation: Users can create tasks with titles, descriptions, due dates, and reminders.
-2. Task Filtering: Allows users to filter tasks based on their status, enhancing task visibility and management.
-3. Task Sorting and Searching: Facilitates sorting and searching of tasks based on various criteria.
-4. User Profiles: Offers customizable user profiles with avatars for a personalized experience.
-5. Data Persistence: Utilizes browser's localStorage for saving and loading tasks, ensuring data integrity.
-6. Comprehensive Task Management: Supports updating task status, deleting tasks, and filtering tasks by status, including a new filter functionality for improved task organization.
+1. User Authentication: New component for user login and registration, enhancing security.
+2. Task Creation: Users can create tasks with titles, descriptions, due dates, and reminders.
+3. Task Filtering: Users can filter tasks based on their status, improving task visibility.
+4. Task Sorting and Searching: Supports sorting and searching tasks based on various criteria.
+5. User Profiles: Customizable user profiles with avatars for a personalized experience.
+6. Data Persistence: Utilizes browser's localStorage for saving tasks and authentication state.
 
 Current State:
-After the last iteration, the application now includes a functional task filter, allowing users to display tasks based on their status. This was achieved by introducing a new state variable for the filter value, modifying the `TaskFilter` component to update this variable, and updating the task rendering logic to filter tasks accordingly. These changes have significantly improved the application's usability by enabling users to easily manage and view tasks based on their completion status.
+The application has been enhanced with user authentication and authorization features. A new component for user login and registration has been introduced, and the application's main interface is now accessible only to authenticated users. Task-related operations are protected, ensuring that only authenticated users can add, update, or delete tasks. The authentication state is persisted across sessions using localStorage, improving user experience by remembering login status. These changes have significantly improved the application's security and usability.
