@@ -16,6 +16,8 @@
     "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1"
+    "redis": "^4.0.0",
+    "@nestjs-modules/ioredis": "^2.0.0",
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
