@@ -18,3 +18,8 @@
 "src/components/interface/TaskSortSearch.tsx" = "Component for sorting and searching tasks."
 "src/components/interface/UserProfile.tsx" = "Component for displaying user profiles with avatars."
 "src/components/interface/UserAuth.tsx" = "Component for handling user authentication, including login and registration forms."
+"backend/src/app.controller.spec.ts" = "This file contains a unit test for the `AppController` class in a NestJS application"
+"backend/src/app.controller.ts" = "This file defines a controller class in a NestJS application that has routes to handle HTTP requests"
+"backend/src/app.module.ts" = "This file defines the main module of a NestJS application, specifying the controllers and services to be used within the application."
+"backend/src/app.service.ts" = "This file contains a NestJS service class named AppService, that contains the logic to server the AppContorller class"
+"backend/src/main.ts" = "This code file initializes a Nest.js application by creating an instance of the AppModule and listening on port 3000 for incoming requests."
