@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Input, Button, Tooltip } from "@nextui-org/react";
-import { LogOut } from "react-icons/io5";
 
 // UserAuth handles user login and registration
 const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
@@ -39,13 +38,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
           <Button type="button" color="secondary" onClick={() => setIsLoginMode(!isLoginMode)}>
             {isLoginMode ? 'Switch to Register' : 'Switch to Login'}
           </Button>
-        </div>
-        {/* Beautified Logout Button */}
-        <Tooltip content="Logout" placement="bottom">
-          <Button auto flat color="error" icon={<LogOut size={20} />} onClick={() => console.log('Logout functionality here')}>
-            Logout
-          </Button>
-        </Tooltip>
+        </div>        
         </div>
       </form>
     </div>
