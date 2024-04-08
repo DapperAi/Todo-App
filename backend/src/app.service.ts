@@ -17,17 +17,16 @@ export class AppService {
     if (!storedPassword) return `User ${emailId} does not exist.`;
     const isMatch = await bcrypt.compare(password, storedPassword);
     if (isMatch) {
-    if (storedPassword && storedPassword === password) {
-      return `User ${emailId} authenticated successfully.`;
+      if (storedPassword && storedPassword === password) {
+        return `User ${emailId} authenticated successfully.`;
+      }
+      return `Authentication failed for user ${emailId}.`;
     }
-    return `Authentication failed for user ${emailId}.`;
   }
 
   async registerUser(emailId: string, password: string): Promise<string> {
     const hashedPassword = await bcrypt.hash(password, 10);
     await this.redis.set(`user:${emailId}`, hashedPassword);
     return `User ${emailId} registered successfully.`;
-      return `Authentication failed for user ${emailId}.`;
-    }
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Tooltip } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
 
 // UserAuth handles user login and registration
 const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
@@ -10,17 +10,24 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/auth', {
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ emailId: username, password }),
-      });
+      let response : Response;
+      if(isLoginMode) {
+        response = await fetch('http://localhost:3000/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ emailId: username, password }),
+        });
+      } else {
+        response = await fetch('http://localhost:3000/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ emailId: username, password }),
+        });
+      }
       const data = await response.text();
       console.log(data);
       if (isLoginMode) onAuthSuccess();
@@ -36,11 +43,11 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
         <Input isClearable={true} placeholder="Email" value={username} onChange={(e) => setUsername(e.target.value)} />
         <Input isClearable={true} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <div className="flex flex-row gap-4">
-          <Button type="submit" color="primary">
-            {isLoginMode ? "Login" : "Register"}
+          <Button type="submit" color="primary" onClick={() => setIsLoginMode(true)}>
+           Login
           </Button>
-          <Button type="button" color="secondary" onClick={() => setIsLoginMode(!isLoginMode)}>
-            {isLoginMode ? 'Switch to Register' : 'Switch to Login'}
+          <Button type="submit" color="secondary" onClick={() => setIsLoginMode(false)}>
+           Resigter
           </Button>
         </div>
         </div>

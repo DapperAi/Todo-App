@@ -15,7 +15,6 @@ export class AppController {
   ): Promise<string> {
     return this.appService.authenticateUser(body.emailId, body.password);
   }
-}
 
   @Post('register')
   register(
@@ -24,4 +23,3 @@ export class AppController {
     return this.appService.registerUser(body.emailId, body.password);
   }
 }
-
