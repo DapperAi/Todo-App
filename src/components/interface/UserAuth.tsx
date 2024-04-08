@@ -7,11 +7,22 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   const [password, setPassword] = useState('');
   const [isLoginMode, setIsLoginMode] = useState(true);
 
-  const handleAuth = (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder for authentication logic
-    console.log(username, password);
-    onAuthSuccess();
+    try {
+      const response = await fetch('/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emailId: username, password }),
+      });
+      const data = await response.text();
+      console.log(data);
+      onAuthSuccess();
+    } catch (error) {
+      console.error('Authentication failed', error);
+    }
   };
 
   return (

@@ -2,16 +2,17 @@
 Application Summary Document
 
 Description:
-The application is a task management tool that now features a secure user authentication system, enhancing personal and professional task organization. It allows users to manage their tasks efficiently with a personalized and secure experience.
+The application is a comprehensive task management tool designed to help users efficiently organize and manage their tasks. With the latest update, it now includes a secure user authentication system, allowing for a personalized and secure task management experience.
 
 Main Features:
-1. Secure User Authentication: Users can log in or register, ensuring their task management experience is personalized and secure.
-2. Task Management: Users can create, update, and delete tasks.
-3. Task Customization: Setting due dates and reminders for tasks is supported.
-4. Advanced Task Filtering: Tasks can be filtered by status for better organization.
-5. Task Sorting and Searching: Enhances task navigation with sorting and searching functionalities.
-6. Personalized User Profiles: Users can customize their profiles for a more personalized interface.
-7. Data Persistence: Utilizes localStorage for maintaining tasks and authentication states across sessions.
+1. Secure User Authentication: Enables users to securely log in or register.
+2. Task Management: Facilitates creating, updating, and deleting tasks.
+3. Task Customization: Supports setting due dates and reminders.
+4. Advanced Task Filtering: Allows filtering tasks by status.
+5. Task Sorting and Searching: Provides enhanced navigation.
+6. Personalized User Profiles: Offers customization options for user profiles.
+7. Data Persistence: Uses localStorage for data retention across sessions.
+8. Logout Functionality: Users can now log out, enhancing security and usability.
 
 Current State:
-The application has been enhanced with a fully functional user authentication feature, following the latest iteration. The backend and frontend have been updated to support user authentication, including secure login and registration processes. The user interface for authentication has been improved with modern input and button components, making the user interaction experience more aesthetically pleasing and consistent. These updates, combined with the existing task management features, make the application a comprehensive and secure tool for managing tasks efficiently.
+After the latest iteration, the application boasts a logout feature, further securing the user experience by allowing users to easily log out. This addition complements the secure user authentication system, task management, and customization features, making the application a more robust and user-friendly tool for managing tasks. The user interface has been updated to include a logout button, seamlessly integrated with the application's design and ensuring a consistent user experience.

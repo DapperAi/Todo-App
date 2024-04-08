@@ -1,125 +1,34 @@
-```diff
---- backend/src/app.service.ts
-+++ backend/src/app.service.ts
-@@ -5,5 +5,10 @@ export class AppService {
-   getHello(): string {
-     return 'Hello World!';
-   }
-+  
-+  authenticateUser(emailId: string, password: string): string {
-+    // Placeholder for authentication logic
-+    return `User ${emailId} authenticated successfully.`;
-+  }
- }
-```
+To implement the logout functionality as requested, we'll need to make changes primarily to the `src/App.tsx` file. Here's a step-by-step plan for the changes:
+
+1. **Add a Logout Button**: We'll add a logout button to the authenticated view in `src/App.tsx`. This button will be visible only when the user is authenticated. For consistency and to leverage the UI library already in use, we'll use the `Button` component from `@nextui-org/react`.
+
+2. **Implement the Logout Functionality**: The logout button will have an `onClick` event handler that sets the `isAuthenticated` state to `false`. This action will effectively log the user out and display the login form again.
+
+3. **Styling the Logout Button**: To ensure the logout button aligns with the application's design, we'll use Tailwind CSS for styling. However, since we're using `@nextui-org/react` components, most styling will be consistent with the library's design system, and minimal Tailwind CSS might be needed.
+
+Let's proceed with the code changes:
 
 ```diff
---- backend/src/app.controller.ts
-+++ backend/src/app.controller.ts
-@@ -9,3 +9,11 @@
-   getHello(): string {
-     return this.appService.getHello();
-   }
-+  @Post('auth')
-+  authenticate(@Body() body: { emailId: string; password: string }): string {
-+    return this.appService.authenticateUser(body.emailId, body.password);
-+  }
-+}
+--- src/App.tsx
++++ src/App.tsx
+@@ -1,5 +1,6 @@
+ import React, { useState, useEffect } from 'react';
+ import { saveTasksToLocalStorage, loadTasksFromLocalStorage } from './utils/localStorageUtils';
++import { Button } from '@nextui-org/react';
+ 
+ import NewTaskForm from './components/interface/NewTaskForm';
+ import TaskList from './components/interface/TaskList';
+@@ -48,6 +49,14 @@
+           <TaskFilter value={filter} onChange={(e) => setFilter(e.target.value)} />
+           <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />
++          <div className="flex justify-end mt-4">
++            <Button color="error" auto onClick={() => setIsAuthenticated(false)}>
++              Logout
++            </Button>
++          </div>
+         </div>
+       )}
+     </div>
 ```
 
-
-```diff
---- src/components/interface/UserAuth.tsx
-+++ src/components/interface/UserAuth.tsx
-@@ -10,7 +10,16 @@
-   const handleAuth = (e: React.FormEvent) => {
-     e.preventDefault();
--    // Placeholder for authentication logic
--    console.log(username, password);
-+    const response = await fetch('/auth', {
-+      method: 'POST',
-+      headers: {
-+        'Content-Type': 'application/json',
-+      },
-+      body: JSON.stringify({ emailId: username, password }),
-+    });
-+    const data = await response.text();
-+    console.log(data);
-     onAuthSuccess();
-   };
-```
-
-```diff
---- src/components/interface/UserAuth.tsx
-+++ src/components/interface/UserAuth.tsx
-@@ -20,3 +20,3 @@
-       <div className="flex flex-col gap-4">
--        <Input isClearable={true} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-+        <Input isClearable={true} placeholder="Email" value={username} onChange={(e) => setUsername(e.target.value)} />
-         <Input isClearable={true} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-```
-```diff
---- backend/src/app.controller.ts
-+++ backend/src/app.controller.ts
-@@ -8,2 +8,11 @@
-   @Get()
-   getHello(): string {
-     return this.appService.getHello();
-   }
-+  @Post('auth')
-+  authenticate(@Body() body: { emailId: string; password: string }): string {
-+    return this.appService.authenticateUser(body.emailId, body.password);
-+  }
-+}
-```
-
-```diff
---- src/components/interface/UserAuth.tsx
-+++ src/components/interface/UserAuth.tsx
-@@ -10,7 +10,17 @@
-   const handleAuth = async (e: React.FormEvent) => {
-     e.preventDefault();
--    // Placeholder for authentication logic
--    console.log(username, password);
-+    try {
-+      const response = await fetch('/auth', {
-+        method: 'POST',
-+        headers: {
-+          'Content-Type': 'application/json',
-+        },
-+        body: JSON.stringify({ emailId: username, password }),
-+      });
-+      const data = await response.text();
-+      console.log(data);
-+      onAuthSuccess();
-+    } catch (error) {
-+      console.error('Authentication failed', error);
-+    }
-   };
-```
-These changes yield a fully functional program according to the instructions.
-```diff
---- src/components/interface/UserAuth.tsx
-+++ src/components/interface/UserAuth.tsx
-@@ -10,7 +10,17 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
-   const handleAuth = async (e: React.FormEvent) => {
-     e.preventDefault();
--    // Placeholder for authentication logic
--    console.log(username, password);
-+    try {
-+      const response = await fetch('/auth', {
-+        method: 'POST',
-+        headers: {
-+          'Content-Type': 'application/json',
-+        },
-+        body: JSON.stringify({ emailId: username, password }),
-+      });
-+      const data = await response.text();
-+      console.log(data);
-+      onAuthSuccess();
-+    } catch (error) {
-+      console.error('Authentication failed', error);
-+    }
-   };
-```
 These changes yield a fully functional program according to the instructions.

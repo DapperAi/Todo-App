@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { saveTasksToLocalStorage, loadTasksFromLocalStorage } from './utils/localStorageUtils';
+import { Button } from '@nextui-org/react';
 
 import NewTaskForm from './components/interface/NewTaskForm';
 import TaskList from './components/interface/TaskList';
@@ -55,6 +56,11 @@ const App = () => {
           <NewTaskForm onSubmit={addTask} />
           <TaskFilter value={filter} onChange={(e) => setFilter(e.target.value)} />
           <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />
+          <div className="flex justify-end mt-4">
+            <Button color="error" auto onClick={() => setIsAuthenticated(false)}>
+              Logout
+            </Button>
+          </div>
         </div>
       )}
     </div>
