@@ -18,7 +18,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
     <div className="p-4">
       <form onSubmit={handleAuth}>
       <div className="flex flex-col gap-4">
-        <Input isClearable={true} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input isClearable={true} placeholder="Email" value={username} onChange={(e) => setUsername(e.target.value)} />
         <Input isClearable={true} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <div className="flex flex-row gap-4">
           <Button type="submit" color="primary">
