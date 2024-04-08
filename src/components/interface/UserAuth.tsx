@@ -11,6 +11,10 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
     e.preventDefault();
     try {
       const response = await fetch('/auth', {
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -19,7 +23,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
       });
       const data = await response.text();
       console.log(data);
-      onAuthSuccess();
+      if (isLoginMode) onAuthSuccess();
     } catch (error) {
       console.error('Authentication failed', error);
     }
@@ -38,7 +42,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
           <Button type="button" color="secondary" onClick={() => setIsLoginMode(!isLoginMode)}>
             {isLoginMode ? 'Switch to Register' : 'Switch to Login'}
           </Button>
-        </div>        
+        </div>
         </div>
       </form>
     </div>

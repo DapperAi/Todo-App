@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { RedisModule } from '@nestjs-modules/ioredis';
 
 @Module({
-  imports: [],
   controllers: [AppController],
   imports: [
     RedisModule.forRoot({
-      config: { host: process.env.REDIS_HOST, port: process.env.REDIS_PORT },
+      type: 'single',
+      url: 'redis://localhost:6379',
     }),
   ],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
