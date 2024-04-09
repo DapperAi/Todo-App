@@ -16,14 +16,6 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   async function handleLogin() {
     let response : Response;
     try {
-      if (!username || !password) {
-        setShowAuthFailure(true);
-        setDisplayMessage("Email and password are required.");
-        setTimeout(() => {
-          setShowAuthFailure(false);
-        }, 3000);
-        return;
-      }
       response = await fetch('http://localhost:3000/auth', {
             method: 'POST',
             headers: {
@@ -58,13 +50,15 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
         body: JSON.stringify({ emailId: username, password }),
       });
       const data = await response.json()
-      if(data.success === true && isLoginMode) {
+      if(data.success === true) {
         SetShowUserRegistered(true);
         setDisplayMessage(data.message);
+        SetIsUserRegisterSuccess(true);
         setTimeout(() => {
           SetShowUserRegistered(false);
-          SetIsUserRegisterSuccess(true);
         }, 3000);
+      } else {
+        throw new Error(data.message)
       }
     } catch(err) {
       console.error('Registration failed', err);
@@ -79,11 +73,20 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-      if(isLoginMode) {
-        handleLogin()       
-      } else {
-        handleUserRegistration();
-      }
+    if (!username || !password) {
+      setShowAuthFailure(true);
+      setDisplayMessage("Email and password are required.");
+      setTimeout(() => {
+        setShowAuthFailure(false);
+      }, 3000);
+      return;
+    }
+
+    if(isLoginMode) {
+      handleLogin()       
+    } else {
+      handleUserRegistration();
+    }
   };
 
   const renderModal = (heading: string, body: string): JSX.Element => {
@@ -124,7 +127,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
         isUserRegisterSuccess ?
           renderModal("Welcome to Tasklists!!", displayMessage)
           : 
-          renderModal("Registration Error", displayMessage)
+          renderModal("User Registration", displayMessage)
         : ""
       }
     </div>

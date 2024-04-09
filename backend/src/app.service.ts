@@ -22,17 +22,15 @@ export class AppService {
       };
     const isMatch = await bcrypt.compare(password, storedPassword);
     if (isMatch) {
-      if (storedPassword && storedPassword === password) {
-        return {
-          success: true,
-          message: `User ${emailId} authenticated successfully.`,
-        };
-      }
       return {
-        success: false,
-        message: `Authentication failed for user ${emailId}`,
+        success: true,
+        message: `User ${emailId} authenticated successfully.`,
       };
     }
+    return {
+      success: false,
+      message: `Authentication failed for user ${emailId}`,
+    };
   }
 
   async registerUser(emailId: string, password: string): Promise<any> {
