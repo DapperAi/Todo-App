@@ -1,111 +1,52 @@
-To implement the requested feature, we need to make changes in both the backend and frontend parts of the application. Here's a step-by-step plan for each part:
+To implement the feature of showing a pop-up message on authentication failure, we will use the `Modal` component from the `@nextui-org/react` library. The steps to achieve this are as follows:
 
-**Backend Changes:**
-1. In `app.service.ts`, add a new method `registerUser` that takes an email and password, hashes the password, and stores it in Redis with the email as the key.
-2. In `app.controller.ts`, add a new route handler for `POST` requests to `/register` that calls the `registerUser` method from `AppService`.
+1. Import the `Modal` and `Text` components from `@nextui-org/react` at the beginning of the `UserAuth.tsx` file.
+2. Add a new state variable to manage the visibility of the modal. This state will be a boolean indicating whether the modal should be shown or not.
+3. Modify the `catch` block in the `handleAuth` function to set the state variable for showing the modal to `true` when an authentication error occurs.
+4. Add the `Modal` component to the JSX returned by the `UserAuth` component. This modal should display the authentication failure message and have a button to close the modal, which sets the state variable for showing the modal back to `false`.
+5. Ensure the modal is conditionally rendered based on the state variable that controls its visibility.
 
-**Frontend Changes:**
-1. In `UserAuth.tsx`, add a new function `handleRegister` that sends a `POST` request to `/register` with the email and password.
-2. Modify the existing form submission handler to call `handleRegister` instead of `handleAuth` when in registration mode (determined by `isLoginMode` state).
-
-Let's proceed with generating the diffs for these changes.
-
-```diff
---- backend/src/app.service.ts
-+++ backend/src/app.service.ts
-@@ -1,22 +1,31 @@
- import { Injectable } from '@nestjs/common';
- import { InjectRedis } from '@nestjs-modules/ioredis';
- import Redis from 'ioredis';
-+import * as bcrypt from 'bcrypt';
- 
- @Injectable()
- export class AppService {
-   constructor(@InjectRedis() private readonly redis: Redis) { }
- 
-   getHello(): string {
-     return 'Hello World!';
-   }
- 
-   async authenticateUser(emailId: string, password: string): Promise<string> {
-     const userKey = `user:${emailId}`;
-     const storedPassword = await this.redis.get(userKey);
-+    if (!storedPassword) return `User ${emailId} does not exist.`;
-+    const isMatch = await bcrypt.compare(password, storedPassword);
-+    if (isMatch) {
-       return `User ${emailId} authenticated successfully.`;
--    } else {
-+    }
-+    return `Authentication failed for user ${emailId}.`;
-+  }
-+
-+  async registerUser(emailId: string, password: string): Promise<string> {
-+    const hashedPassword = await bcrypt.hash(password, 10);
-+    await this.redis.set(`user:${emailId}`, hashedPassword);
-+    return `User ${emailId} registered successfully.`;
-   }
- }
-```
-
-```diff
---- backend/src/app.controller.ts
-+++ backend/src/app.controller.ts
-@@ -14,5 +14,14 @@
-       return this.appService.authenticateUser(body.emailId, body.password);
-   }
- 
-+  @Post('register')
-+  register(
-+    @Body() body: { emailId: string; password: string },
-+  ): Promise<string> {
-+    return this.appService.registerUser(body.emailId, body.password);
-+  }
-+}
-+
-+
-```
+Let's write the changes in the unified "git diff" syntax:
 
 ```diff
 --- src/components/interface/UserAuth.tsx
 +++ src/components/interface/UserAuth.tsx
-@@ -10,6 +10,17 @@
+@@ -1,5 +1,7 @@
+ import React, { useState } from "react";
+-import { Input, Button } from "@nextui-org/react";
++import { Input, Button, Modal, Text } from "@nextui-org/react";
++
++// UserAuth handles user login and registration
+ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
+   const [username, setUsername] = useState('');
+   const [password, setPassword] = useState('');
+@@ -6,6 +8,7 @@
+   const [isLoginMode, setIsLoginMode] = useState(true);
++  const [showModal, setShowModal] = useState(false);
+ 
+   const handleAuth = async (e: React.FormEvent) => {
      e.preventDefault();
-     try {
-       const response = await fetch('/auth', {
-+  const handleRegister = async (e: React.FormEvent) => {
-+    e.preventDefault();
-+    try {
-+      const response = await fetch('/register', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-@@ -19,7 +30,7 @@
-       });
-       const data = await response.text();
-       console.log(data);
--      onAuthSuccess();
-+      if (isLoginMode) onAuthSuccess();
-     } catch (error) {
+@@ -37,6 +40,7 @@
        console.error('Authentication failed', error);
++      setShowModal(true);
      }
-@@ -30,7 +41,7 @@
-       <form onSubmit={handleAuth}>
-       <div className="flex flex-col gap-4">
-         <Input isClearable={true} placeholder="Email" value={username} onChange={(e) => setUsername(e.target.value)} />
--        <Input isClearable={true} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-+        <Input isClearable={true} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-         <div className="flex flex-row gap-4">
-           <Button type="submit" color="primary">
-             {isLoginMode ? "Login" : "Register"}
-@@ -38,7 +49,7 @@
-           <Button type="button" color="secondary" onClick={() => setIsLoginMode(!isLoginMode)}>
-             {isLoginMode ? 'Switch to Register' : 'Switch to Login'}
-           </Button>
--        </div>        
-+        </div>
+   };
+ 
+@@ -56,5 +60,16 @@
          </div>
        </form>
++      <Modal closeButton aria-labelledby="modal-title" open={showModal} onClose={() => setShowModal(false)}>
++        <Modal.Header>
++          <Text id="modal-title" size={18}>
++            Authentication Error
++          </Text>
++        </Modal.Header>
++        <Modal.Body>
++          <Text>Authentication failed. Please try again.</Text>
++        </Modal.Body>
++      </Modal>
      </div>
+   );
 ```
 
 These changes yield a fully functional program according to the instructions.

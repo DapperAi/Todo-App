@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Input, Button } from "@nextui-org/react";
+import { Input, Button, Modal, Text } from "@nextui-org/react";
+
+// UserAuth handles user login and registration
 
 // UserAuth handles user login and registration
 const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +39,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
       }
     } catch (error) {
       console.error('Authentication failed', error);
+      setShowModal(true);
     }
   };
 
@@ -55,6 +59,16 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
         </div>
         </div>
       </form>
+      <Modal closeButton aria-labelledby="modal-title" open={showModal} onClose={() => setShowModal(false)}>
+        <Modal.Header>
+          <Text id="modal-title" size={18}>
+            Authentication Error
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Text>Authentication failed. Please try again.</Text>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
