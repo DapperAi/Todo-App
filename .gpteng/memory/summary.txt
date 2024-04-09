@@ -2,17 +2,17 @@
 Application Summary Document
 
 Description:
-The application is a comprehensive task management tool designed to enhance productivity and organization for its users. It leverages advanced technologies, including Redis, for secure data handling and user authentication, ensuring a seamless and secure experience.
+The application is a task management tool designed to boost productivity and organization. It features secure data handling and user authentication, powered by Redis, to provide a seamless and secure user experience.
 
 Main Features:
-1. Enhanced User Authentication: Utilizes Redis for secure credential storage, with a user-friendly modal pop-up for authentication errors.
-2. Task Management: Enables users to create, update, and delete tasks efficiently.
-3. Task Customization: Offers due dates and reminders to keep track of important tasks.
-4. Advanced Task Filtering: Allows filtering of tasks by status for better organization.
-5. Task Sorting and Searching: Facilitates easy management and access to tasks.
-6. Personalized User Profiles: Customization options available for user profiles.
-7. Data Persistence: Ensures user data is securely retained across sessions.
-8. Logout Functionality: Provides a secure mechanism for user logout.
+1. Enhanced User Authentication: Secure credential storage using Redis, with improved modal pop-up for authentication errors.
+2. Task Management: Users can create, update, and delete tasks with ease.
+3. Task Customization: Set due dates and reminders for tasks.
+4. Advanced Task Filtering: Filter tasks by status for better organization.
+5. Task Sorting and Searching: Easily manage and access tasks.
+6. Personalized User Profiles: Offers customization options for profiles.
+7. Data Persistence: Securely retains user data across sessions.
+8. Logout Functionality: Secure user logout mechanism.
 
 Current State:
-After the latest iteration, the application has improved its user authentication process by fixing modal component imports and property naming, enhancing the login experience. These changes, along with the robust authentication system powered by Redis, have significantly improved the application's security and overall user experience, maintaining its status as an effective task management tool.
+The application now features an improved authentication error modal that appears as a pop-up and automatically disappears after 3 seconds, enhancing the user experience during login failures. This change, along with the secure authentication system powered by Redis, has further solidified the application's position as an effective and secure task management tool.

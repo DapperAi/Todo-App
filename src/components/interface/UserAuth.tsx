@@ -40,6 +40,10 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
     } catch (error) {
       console.error('Authentication failed', error);
       setShowModal(true);
+      // Automatically close the modal after 3 seconds
+      setTimeout(() => {
+        setShowModal(false);
+      }, 3000);
     }
   };
 
@@ -59,7 +63,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
         </div>
         </div>
       </form>
-      <Modal closeButton aria-labelledby="modal-title" visible={showModal} onClose={() => setShowModal(false)}>
+      <Modal closeButton aria-labelledby="modal-title" isOpen={showModal} onClose={() => setShowModal(false)}>
         <ModalHeader>
           <h2 id="modal-title">
             Authentication Error
