@@ -2,17 +2,17 @@
 Application Summary Document
 
 Description:
-The application is a comprehensive task management tool designed to enhance productivity and organization. It now features an improved user authentication system, incorporating a pop-up message for authentication failures, and utilizes Redis for efficient data handling and security.
+The application is a task management tool designed to boost productivity and organization. It features an enhanced user authentication system and utilizes Redis for secure data handling, aiming to provide a seamless and secure user experience.
 
 Main Features:
-1. Enhanced User Authentication: Utilizes Redis for secure credential storage and now displays a pop-up message on authentication failure.
-2. Task Management: Enables creation, updating, and deletion of tasks.
-3. Task Customization: Supports setting due dates and reminders.
-4. Advanced Task Filtering: Allows filtering of tasks by status.
-5. Task Sorting and Searching: Facilitates easy management and access to tasks.
-6. Personalized User Profiles: Offers customization options for user profiles.
-7. Data Persistence: Ensures data is retained across sessions for user convenience.
-8. Logout Functionality: Provides a secure mechanism for user logout.
+1. Enhanced User Authentication: Incorporates Redis for secure credential storage and displays a modal pop-up message upon authentication failure.
+2. Task Management: Allows users to create, update, and delete tasks.
+3. Task Customization: Supports setting due dates and reminders for tasks.
+4. Advanced Task Filtering: Enables filtering tasks by their status.
+5. Task Sorting and Searching: Helps users easily manage and access tasks.
+6. Personalized User Profiles: Provides customization options for user profiles.
+7. Data Persistence: Ensures user data is retained across sessions.
+8. Logout Functionality: Offers a secure logout mechanism for users.
 
 Current State:
-After the latest iteration, the application has introduced a user-friendly feature to display a modal pop-up message in case of authentication failure, enhancing the user experience during the login process. This addition, along with the secure user registration and authentication system powered by Redis, makes the application more secure and intuitive, further solidifying its position as an effective task management tool.
+The application now includes a user-friendly modal pop-up message for authentication failures, enhancing the login process. This update, combined with the secure user authentication system powered by Redis, improves security and user experience, reinforcing the application's effectiveness as a task management solution.

@@ -61,12 +61,12 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
       </form>
       <Modal closeButton aria-labelledby="modal-title" open={showModal} onClose={() => setShowModal(false)}>
         <Modal.Header>
-          <Text id="modal-title" size={18}>
+          <h2 id="modal-title">
             Authentication Error
-          </Text>
+          </h2>
         </Modal.Header>
         <Modal.Body>
-          <Text>Authentication failed. Please try again.</Text>
+          <p>Authentication failed. Please try again.</p>
         </Modal.Body>
       </Modal>
     </div>
