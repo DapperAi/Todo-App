@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Modal, Text } from "@nextui-org/react";
+import { Input, Button, Modal, ModalHeader, ModalBody } from "@nextui-org/react";
 
 // UserAuth handles user login and registration
 
@@ -59,15 +59,15 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
         </div>
         </div>
       </form>
-      <Modal closeButton aria-labelledby="modal-title" open={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Header>
+      <Modal closeButton aria-labelledby="modal-title" visible={showModal} onClose={() => setShowModal(false)}>
+        <ModalHeader>
           <h2 id="modal-title">
             Authentication Error
           </h2>
-        </Modal.Header>
-        <Modal.Body>
+        </ModalHeader>
+        <ModalBody>
           <p>Authentication failed. Please try again.</p>
-        </Modal.Body>
+        </ModalBody>
       </Modal>
     </div>
   );
