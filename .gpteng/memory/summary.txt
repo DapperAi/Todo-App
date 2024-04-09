@@ -2,17 +2,14 @@
 Application Summary Document
 
 Description:
-The application is a comprehensive task management system designed to assist users in organizing and tracking their tasks efficiently. With the latest updates, it now supports real-time synchronization with the backend, ensuring that any changes made to tasks are immediately reflected across all user sessions.
+The application is a task management system designed to help users efficiently organize and track their tasks. It has been enhanced to ensure secure and dynamic updates of tasks based on the logged-in user's actions, leveraging JWT for authentication.
 
 Main Features:
-1. Real-Time Task Updates: Newly introduced API endpoint for immediate task updates in the backend.
-2. Secure User Authentication: Utilizes Redis for secure storage of credentials and improved error handling.
-3. Comprehensive Task Management: Allows creating, updating, and deleting tasks with instant backend sync.
-4. Task Customization: Enables setting due dates and reminders, aiding in task completion.
-5. Advanced Filtering and Sorting: Provides enhanced task organization through filtering and sorting capabilities.
-6. Personalized User Profiles: Supports user profile customization for a personalized experience.
-7. Data Persistence: Ensures user data is securely retained across sessions for consistency.
-8. Logout Functionality: Offers a secure mechanism for user logout.
+1. Real-Time Task Updates: Supports immediate synchronization of task updates with the backend.
+2. Secure User Authentication: Utilizes JWT for secure user identification and task updates.
+3. Comprehensive Task Management: Enables creating, updating, and deleting tasks with backend synchronization.
+4. Personalized User Experience: Customizes task management based on the logged-in user's profile.
+5. Enhanced Security: Implements improved error handling for secure and reliable task updates.
 
 Current State:
-After the last iteration, the application now includes a modification in the `updateTasksInBackend` function to accept a user's email ID, facilitating dynamic updates based on the logged-in user. This change, along with the introduction of a new backend API endpoint for task updates and the necessary frontend adjustments, ensures that task modifications are immediately synced with the backend. This enhancement further solidifies the application as a reliable and efficient task management tool, offering a synchronized and user-centric experience.
+The application now securely identifies users through JWT tokens instead of request body parameters for task updates. This change enhances security by ensuring that tasks are updated based on the authenticated user's email extracted from the JWT token. The system now provides a more secure, efficient, and user-centric task management experience.

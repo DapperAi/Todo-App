@@ -26,6 +26,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
       const data = await response.json()
       if(data.success === true) {
         onAuthSuccess();
+        localStorage.setItem('token', data.token);
       } else {
         throw new Error(data.message)
       }

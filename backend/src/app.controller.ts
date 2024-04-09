@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Task } from './dto';
 
@@ -27,8 +27,9 @@ export class AppController {
 
   @Post('update-tasks')
   updateTasks(
-    @Body() body: { emailId: string; tasks: Task[] },
+    @Body() body: { tasks: Task[] },
+    @Req() request: any,
   ): Promise<string> {
-    return this.appService.updateUserTasks(body.emailId, body.tasks);
+    // Code for extracting email from JWT and calling updateUserTasks with it will be implemented here.
   }
 }

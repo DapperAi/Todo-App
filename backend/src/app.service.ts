@@ -1,4 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import Redis from 'ioredis';
 import * as bcrypt from 'bcrypt';
@@ -7,7 +8,7 @@ import { Task } from './dto';
 @Injectable()
 export class AppService {
   // eslint-disable-next-line prettier/prettier
-  constructor(@InjectRedis() private readonly redis: Redis) { }
+  constructor(@InjectRedis() private readonly redis: Redis, private readonly jwtService: JwtService) { }
 
   getHello(): string {
     return 'Hello World!';
@@ -23,9 +24,12 @@ export class AppService {
       };
     const isMatch = await bcrypt.compare(password, storedPassword);
     if (isMatch) {
+      const payload = { email: emailId };
+      const token = this.jwtService.sign(payload);
       return {
         success: true,
         message: `User ${emailId} authenticated successfully.`,
+        token: token,
       };
     }
     return {

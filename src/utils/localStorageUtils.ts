@@ -15,10 +15,12 @@ export const loadTasksFromLocalStorage = (): Task[] | null => {
 };
 
 export const updateTasksInBackend = async (emailId: string, tasks: Task[]) => {
+  const token = localStorage.getItem('token');
   const response = await fetch('http://localhost:3000/update-tasks', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({ emailId: emailId, tasks: tasks }),
   });
