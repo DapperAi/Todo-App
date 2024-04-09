@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { saveTasksToLocalStorage, loadTasksFromLocalStorage } from './utils/localStorageUtils';
+import { saveTasksToLocalStorage, loadTasksFromLocalStorage, updateTasksInBackend } from './utils/localStorageUtils';
+import { Button, Tooltip } from '@nextui-org/react';
 import { Button, Tooltip } from '@nextui-org/react';
 
 import NewTaskForm from './components/interface/NewTaskForm';
@@ -30,6 +31,7 @@ const App = () => {
 
   const addTask = (task: Task) => {
     setTasks((currentTasks) => [...currentTasks, task]);
+    updateTasksInBackend('user@example.com', [...currentTasks, task]); // Assuming 'user@example.com' is the logged-in user's email
   };
 
   const updateTaskStatus = (index: number) => {
@@ -38,12 +40,14 @@ const App = () => {
         index === taskIndex ? { ...task, status: task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do' } : task
       )
     );
+    updateTasksInBackend('user@example.com', updatedTasks); // Update tasks in backend
   };
   
   const deleteTask = (index: number) => {
     setTasks((currentTasks) =>
       currentTasks.filter((_, taskIndex) => index !== taskIndex)
     );
+    updateTasksInBackend('user@example.com', updatedTasks); // Update tasks in backend
   };
 
 

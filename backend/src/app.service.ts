@@ -50,4 +50,23 @@ export class AppService {
       message: `User ${emailId} already registered.`,
     };
   }
+
+    async updateUserTasks(emailId: string, tasks: Task[]): Promise<any> {
+        const userTasksKey = `tasks:${emailId}`;
+        const serializedTasks = JSON.stringify(tasks);
+        await this.redis.set(userTasksKey, serializedTasks);
+        return {
+            success: true,
+            message: `Tasks for user ${emailId} updated successfully.`,
+        };
+    }
+}
+
+interface Task {
+    title: string;
+    description: string;
+    status: 'To Do' | 'In Progress' | 'Done';
+    dueDate: Date | null;
+    reminder: boolean;
+}
 }

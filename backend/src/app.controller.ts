@@ -24,3 +24,20 @@ export class AppController {
     return this.appService.registerUser(body.emailId, body.password);
   }
 }
+
+    @Post('update-tasks')
+    updateTasks(
+        @Body() body: { emailId: string; tasks: Task[] },
+    ): Promise<string> {
+        return this.appService.updateUserTasks(body.emailId, body.tasks);
+    }
+
+}
+
+interface Task {
+    title: string;
+    description: string;
+    status: 'To Do' | 'In Progress' | 'Done';
+    dueDate: Date | null;
+    reminder: boolean;
+}

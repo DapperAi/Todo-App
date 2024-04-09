@@ -12,6 +12,16 @@ export const loadTasksFromLocalStorage = (): Task[] | null => {
   return null;
 };
 
+export const updateTasksInBackend = async (emailId: string, tasks: Task[]) => {
+    const response = await fetch('/api/update-tasks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emailId, tasks }),
+    });
+    return response.json();
+};
 interface Task {
   title: string;
   description: string;
