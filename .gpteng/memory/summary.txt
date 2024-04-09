@@ -2,17 +2,17 @@
 Application Summary Document
 
 Description:
-The application is a dynamic task management system designed to help users organize and track their tasks efficiently. It now supports real-time updates to the task list, ensuring that changes made by the user are immediately reflected in the backend storage. This enhancement facilitates a more synchronized and reliable user experience across different sessions.
+The application is a comprehensive task management system designed to assist users in organizing and tracking their tasks efficiently. With the latest updates, it now supports real-time synchronization with the backend, ensuring that any changes made to tasks are immediately reflected across all user sessions.
 
 Main Features:
-1. Real-Time Task Updates: Incorporates a new API endpoint for updating tasks in real-time, ensuring data consistency.
-2. Secure User Authentication: Utilizes Redis for secure credential storage, with an improved authentication error handling mechanism.
-3. Comprehensive Task Management: Enables creating, updating, and deleting tasks with immediate backend synchronization.
-4. Task Customization: Supports setting due dates and reminders for tasks, aiding in timely completion.
-5. Advanced Filtering and Sorting: Offers advanced task filtering by status and sorting/searching functionalities for better organization.
-6. Personalized User Profiles: Allows for user profile customization, enhancing the personal user experience.
-7. Data Persistence: Ensures secure retention of user data across sessions for a consistent experience.
-8. Logout Functionality: Provides a secure logout mechanism for users.
+1. Real-Time Task Updates: Newly introduced API endpoint for immediate task updates in the backend.
+2. Secure User Authentication: Utilizes Redis for secure storage of credentials and improved error handling.
+3. Comprehensive Task Management: Allows creating, updating, and deleting tasks with instant backend sync.
+4. Task Customization: Enables setting due dates and reminders, aiding in task completion.
+5. Advanced Filtering and Sorting: Provides enhanced task organization through filtering and sorting capabilities.
+6. Personalized User Profiles: Supports user profile customization for a personalized experience.
+7. Data Persistence: Ensures user data is securely retained across sessions for consistency.
+8. Logout Functionality: Offers a secure mechanism for user logout.
 
 Current State:
-The application has been significantly enhanced in the last iteration with the introduction of a new backend API endpoint for updating tasks and corresponding frontend changes to utilize this endpoint. These changes allow for the immediate reflection of task additions, updates, and deletions in the backend, ensuring that the user's task list is always up-to-date across different sessions. This update, along with the existing features, solidifies the application's position as a comprehensive and reliable task management tool.
+After the last iteration, the application now includes a modification in the `updateTasksInBackend` function to accept a user's email ID, facilitating dynamic updates based on the logged-in user. This change, along with the introduction of a new backend API endpoint for task updates and the necessary frontend adjustments, ensures that task modifications are immediately synced with the backend. This enhancement further solidifies the application as a reliable and efficient task management tool, offering a synchronized and user-centric experience.

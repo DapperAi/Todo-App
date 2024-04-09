@@ -1,5 +1,7 @@
 // Utility functions for localStorage operations
 
+import { Task } from "../dto";
+
 export const saveTasksToLocalStorage = (tasks: Task[]) => {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 };
@@ -13,19 +15,12 @@ export const loadTasksFromLocalStorage = (): Task[] | null => {
 };
 
 export const updateTasksInBackend = async (emailId: string, tasks: Task[]) => {
-    const response = await fetch('/api/update-tasks', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ emailId, tasks }),
-    });
-    return response.json();
+  const response = await fetch('http://localhost:3000/update-tasks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ emailId: emailId, tasks: tasks }),
+  });
+  return response.json();
 };
-interface Task {
-  title: string;
-  description: string;
-  status: 'To Do' | 'In Progress' | 'Done';
-  dueDate: Date | null;
-  reminder: boolean;
-}

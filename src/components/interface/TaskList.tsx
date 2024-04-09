@@ -1,13 +1,6 @@
 import React from 'react';
 import { Button } from '@nextui-org/react';
-
-type Task = {
-  title: string;
-  description: string;
-  status: 'To Do' | 'In Progress' | 'Done';
-  dueDate: Date | null;
-  reminder: boolean;
-};
+import { Task } from '../../dto';
 
 type TaskListProps = { tasks: Task[]; onUpdate: (index: number) => void; onDelete: (index: number) => void; };
 

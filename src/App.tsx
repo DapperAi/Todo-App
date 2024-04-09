@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { saveTasksToLocalStorage, loadTasksFromLocalStorage, updateTasksInBackend } from './utils/localStorageUtils';
 import { Button, Tooltip } from '@nextui-org/react';
-import { Button, Tooltip } from '@nextui-org/react';
 
 import NewTaskForm from './components/interface/NewTaskForm';
 import TaskList from './components/interface/TaskList';
 import TaskFilter from './components/interface/TaskFilter';
 import UserAuth from './components/interface/UserAuth';
-
-export interface Task {
-  title: string;
-  description: string;
-  status: 'To Do' | 'In Progress' | 'Done';
-  dueDate: Date | null;
-  reminder: boolean;
-}
-// Example usage of the components, actual implementation will require state management
+import { Task } from './dto';
 
 const App = () => {
   const [filter, setFilter] = useState<string>('All');
@@ -30,24 +21,32 @@ const App = () => {
   }, [tasks]);
 
   const addTask = (task: Task) => {
+    updateTasksInBackend('user@example.com', [...tasks, task]); // Assuming 'user@example.com' is the logged-in user's email
     setTasks((currentTasks) => [...currentTasks, task]);
-    updateTasksInBackend('user@example.com', [...currentTasks, task]); // Assuming 'user@example.com' is the logged-in user's email
   };
 
   const updateTaskStatus = (index: number) => {
+    let updatedTasks : Task[] = []
     setTasks((currentTasks) =>
-      currentTasks.map((task: Task, taskIndex: number) =>
-        index === taskIndex ? { ...task, status: task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do' } : task
-      )
+      {
+          updatedTasks = currentTasks.map((task: Task, taskIndex: number) =>
+          index === taskIndex ? { ...task, status: task.status === 'To Do' ? 'In Progress' : task.status === 'In Progress' ? 'Done' : 'To Do' } : task
+        )
+        return updatedTasks;
+      }
     );
-    updateTasksInBackend('user@example.com', updatedTasks); // Update tasks in backend
+    updateTasksInBackend('user@example.com', updatedTasks);
   };
   
   const deleteTask = (index: number) => {
+    let remianingTasks : Task[] = []
     setTasks((currentTasks) =>
-      currentTasks.filter((_, taskIndex) => index !== taskIndex)
+      {
+        remianingTasks = currentTasks.filter((_, taskIndex) => index !== taskIndex)
+        return remianingTasks;
+      }
     );
-    updateTasksInBackend('user@example.com', updatedTasks); // Update tasks in backend
+    updateTasksInBackend('user@example.com', remianingTasks);
   };
 
 

@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Task } from './dto';
 
 @Controller()
 export class AppController {
@@ -23,21 +24,11 @@ export class AppController {
   ): Promise<string> {
     return this.appService.registerUser(body.emailId, body.password);
   }
-}
 
-    @Post('update-tasks')
-    updateTasks(
-        @Body() body: { emailId: string; tasks: Task[] },
-    ): Promise<string> {
-        return this.appService.updateUserTasks(body.emailId, body.tasks);
-    }
-
-}
-
-interface Task {
-    title: string;
-    description: string;
-    status: 'To Do' | 'In Progress' | 'Done';
-    dueDate: Date | null;
-    reminder: boolean;
+  @Post('update-tasks')
+  updateTasks(
+    @Body() body: { emailId: string; tasks: Task[] },
+  ): Promise<string> {
+    return this.appService.updateUserTasks(body.emailId, body.tasks);
+  }
 }

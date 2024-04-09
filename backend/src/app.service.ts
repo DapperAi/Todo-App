@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import Redis from 'ioredis';
 import * as bcrypt from 'bcrypt';
+import { Task } from './dto';
 
 @Injectable()
 export class AppService {
@@ -51,22 +52,13 @@ export class AppService {
     };
   }
 
-    async updateUserTasks(emailId: string, tasks: Task[]): Promise<any> {
-        const userTasksKey = `tasks:${emailId}`;
-        const serializedTasks = JSON.stringify(tasks);
-        await this.redis.set(userTasksKey, serializedTasks);
-        return {
-            success: true,
-            message: `Tasks for user ${emailId} updated successfully.`,
-        };
-    }
-}
-
-interface Task {
-    title: string;
-    description: string;
-    status: 'To Do' | 'In Progress' | 'Done';
-    dueDate: Date | null;
-    reminder: boolean;
-}
+  async updateUserTasks(emailId: string, tasks: Task[]): Promise<any> {
+    const userTasksKey = `tasks:${emailId}`;
+    const serializedTasks = JSON.stringify(tasks);
+    await this.redis.set(userTasksKey, serializedTasks);
+    return {
+      success: true,
+      message: `Tasks for user ${emailId} updated successfully.`,
+    };
+  }
 }

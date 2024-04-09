@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import { Button, Checkbox, Input, Select, SelectItem } from '@nextui-org/react';
 import 'react-datepicker/dist/react-datepicker.css';
-
-type Task = { title: string; description: string; status: string; dueDate: Date | null; reminder: boolean };
+import { Task } from '../../dto';
 
 type NewTaskFormProps = {
   onSubmit: (task: Task) => void;
