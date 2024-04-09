@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import Redis from 'ioredis';
 import * as bcrypt from 'bcrypt';
@@ -15,7 +15,11 @@ export class AppService {
   async authenticateUser(emailId: string, password: string): Promise<any> {
     const userKey = `user:${emailId}`;
     const storedPassword = await this.redis.get(userKey);
-    if (!storedPassword) return `User ${emailId} does not exist.`;
+    if (!storedPassword)
+      return {
+        success: false,
+        message: `User ${emailId} does not exist.`,
+      };
     const isMatch = await bcrypt.compare(password, storedPassword);
     if (isMatch) {
       if (storedPassword && storedPassword === password) {
@@ -32,11 +36,20 @@ export class AppService {
   }
 
   async registerUser(emailId: string, password: string): Promise<any> {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await this.redis.set(`user:${emailId}`, hashedPassword);
+    const userKey = `user:${emailId}`;
+    const isAlreadyRegistered = (await this.redis.get(userKey)) != null;
+    if (!isAlreadyRegistered) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await this.redis.set(`user:${emailId}`, hashedPassword);
+      return {
+        success: true,
+        message: `User ${emailId} registered successfully.`,
+      };
+    }
+
     return {
-      success: true,
-      message: `User ${emailId} registered successfully.`,
+      success: false,
+      message: `User ${emailId} already registered.`,
     };
   }
 }

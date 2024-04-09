@@ -8,44 +8,90 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showAuthFailure, setShowAuthFailure] = useState(false);
+  const [showUserRegistered, SetShowUserRegistered] = useState(false);
+  const [isUserRegisterSuccess, SetIsUserRegisterSuccess] = useState(false);
+  const [displayMessage, setDisplayMessage] = useState<string>("");
+
+  async function handleLogin() {
+    let response : Response;
+    try {
+      response = await fetch('http://localhost:3000/auth', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ emailId: username, password }),
+          });
+      const data = await response.json()
+      if(data.success === true) {
+        onAuthSuccess();
+      } else {
+        throw new Error(data.message)
+      }
+    } catch(err) {
+      console.error('Authentication failed', err);
+        setShowAuthFailure(true);
+        setDisplayMessage((err as Error).message);
+        setTimeout(() => {
+          setShowAuthFailure(false);
+        }, 3000);
+    }
+  }
+
+  async function handleUserRegistration() {
+    let response : Response;
+    try {
+      response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emailId: username, password }),
+      });
+      const data = await response.json()
+      if(data.success === true && isLoginMode) {
+        SetShowUserRegistered(true);
+        setDisplayMessage(data.message);
+        setTimeout(() => {
+          SetShowUserRegistered(false);
+          SetIsUserRegisterSuccess(true);
+        }, 3000);
+      }
+    } catch(err) {
+      console.error('Registration failed', err);
+      SetShowUserRegistered(true);
+      setDisplayMessage((err as Error).message);
+      SetIsUserRegisterSuccess(false);
+      setTimeout(() => {
+        SetShowUserRegistered(false);
+      }, 3000);
+    }
+  }
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      let response : Response;
       if(isLoginMode) {
-        response = await fetch('http://localhost:3000/auth', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ emailId: username, password }),
-        });
+        handleLogin()       
       } else {
-        response = await fetch('http://localhost:3000/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ emailId: username, password }),
-        });
+        handleUserRegistration();
       }
-      const data = await response.json()
-      if(data.success === true && isLoginMode) {
-        onAuthSuccess();
-      } else {
-        throw new Error(data.message);
-      }
-    } catch (error) {
-      console.error('Authentication failed', error);
-      setShowModal(true);
-      // Automatically close the modal after 3 seconds
-      setTimeout(() => {
-        setShowModal(false);
-      }, 3000);
-    }
   };
+
+  const renderModal = (heading: string, body: string): JSX.Element => {
+    return (
+      <Modal closeButton aria-labelledby="modal-title" isOpen={true}>
+        <ModalHeader>
+          <h2 id="modal-title">
+            {heading}
+          </h2>
+        </ModalHeader>
+        <ModalBody>
+          <p>{body}</p>
+        </ModalBody>
+      </Modal>
+    )
+  }
 
   return (
     <div className="p-4">
@@ -63,18 +109,20 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
         </div>
         </div>
       </form>
-      <Modal closeButton aria-labelledby="modal-title" isOpen={showModal} onClose={() => setShowModal(false)}>
-        <ModalHeader>
-          <h2 id="modal-title">
-            Authentication Error
-          </h2>
-        </ModalHeader>
-        <ModalBody>
-          <p>Authentication failed. Please try again.</p>
-        </ModalBody>
-      </Modal>
+
+      {showAuthFailure && renderModal("Authentication Error", displayMessage)}
+      {
+        showUserRegistered ?
+        isUserRegisterSuccess ?
+          renderModal("Welcome to Tasklists!!", displayMessage)
+          : 
+          renderModal("Registration Error", displayMessage)
+        : ""
+      }
     </div>
   );
 };
 
 export default UserAuth;
+
+
