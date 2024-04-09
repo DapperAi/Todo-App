@@ -1,4 +1,4 @@
-# Todo-App, developed by AI
+# Todo-App, 
 ## Running the frontend app:
 1. cd <app_directory_with_run.sh_file>
 2. ./run.sh
