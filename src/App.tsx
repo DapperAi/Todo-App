@@ -20,13 +20,14 @@ const App = () => {
     if(isAuthenticated){
       getTasksInBackend().then(res => {
         console.log(res);
-        console.log(tasks);
         if(res) {
           setTasks(JSON.parse(res));
         }
       })
+    } else {
+      setTasks([]);
     }
-  },[isAuthenticated, tasks])
+  },[isAuthenticated])
   
   useEffect(() => {
     const un = localStorage.getItem('username') ?? "";
