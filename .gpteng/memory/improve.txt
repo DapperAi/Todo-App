@@ -1,24 +1,30 @@
-To implement the feature where the modal shown on authentication failure appears like a pop-up and then disappears after a short duration, we need to make the following changes:
+To implement the requested feature, we need to modify the `handleLogin` function in the `UserAuth.tsx` file to check if the `username` (email) or `password` fields are empty before making the API call. If either field is empty, we should not proceed with the API call and instead, display an appropriate error message to the user. Here's a step-by-step plan for the changes:
 
-1. **Modify the `UserAuth` component (`UserAuth.tsx`):**
-   - Introduce a new state variable to control the visibility duration of the modal. This state will be used to automatically close the modal after a specified time interval.
-   - In the `catch` block of the `handleAuth` function, where the modal is currently being shown (`setShowModal(true);`), add logic to automatically set `showModal` to `false` after a delay. This can be achieved using `setTimeout`.
-   - The duration for the modal to stay visible can be set as per the requirement, for example, 3000 milliseconds (3 seconds).
+1. Inside the `handleLogin` function, before the `try` block, add a condition to check if `username` or `password` is empty.
+2. If either is empty, set the `showAuthFailure` state to `true` and update the `displayMessage` state with an appropriate error message like "Email and password are required.".
+3. Use `return` to exit the function early if the condition is met, preventing the API call from being made.
+4. There's no need to modify the `setTimeout` function that hides the error message, as it can remain the same to automatically hide the message after 3 seconds.
 
-Let's proceed with generating the diffs for these changes.
+Now, let's write the changes in the unified "git diff" syntax:
 
 ```diff
 --- src/components/interface/UserAuth.tsx
 +++ src/components/interface/UserAuth.tsx
-@@ -41,7 +41,12 @@
-       console.error('Authentication failed', error);
-       setShowModal(true);
-+      // Automatically close the modal after 3 seconds
-+      setTimeout(() => {
-+        setShowModal(false);
-+      }, 3000);
-     }
-   };
+@@ -16,6 +16,13 @@
+   async function handleLogin() {
+     let response : Response;
+     try {
++      if (!username || !password) {
++        setShowAuthFailure(true);
++        setDisplayMessage("Email and password are required.");
++        setTimeout(() => {
++          setShowAuthFailure(false);
++        }, 3000);
++        return;
++      }
+       response = await fetch('http://localhost:3000/auth', {
+         method: 'POST',
+         headers: {
 ```
 
 These changes yield a fully functional program according to the instructions.

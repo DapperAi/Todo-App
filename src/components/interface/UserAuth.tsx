@@ -16,6 +16,14 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   async function handleLogin() {
     let response : Response;
     try {
+      if (!username || !password) {
+        setShowAuthFailure(true);
+        setDisplayMessage("Email and password are required.");
+        setTimeout(() => {
+          setShowAuthFailure(false);
+        }, 3000);
+        return;
+      }
       response = await fetch('http://localhost:3000/auth', {
             method: 'POST',
             headers: {
