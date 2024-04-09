@@ -57,6 +57,11 @@ export class AppService {
   }
 
   async updateUserTasks(emailId: string, tasks: Task[]): Promise<any> {
+    const userKey = `user:${emailId}`;
+    const isUserRegistered = (await this.redis.get(userKey)) != null;
+    if (!isUserRegistered) {
+      throw new Error('User not registered');
+    }
     const userTasksKey = `tasks:${emailId}`;
     const serializedTasks = JSON.stringify(tasks);
     await this.redis.set(userTasksKey, serializedTasks);
