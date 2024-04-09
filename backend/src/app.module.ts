@@ -13,4 +13,5 @@ import { RedisModule } from '@nestjs-modules/ioredis';
   ],
   providers: [AppService],
 })
+// eslint-disable-next-line prettier/prettier
 export class AppModule { }

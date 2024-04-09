@@ -28,9 +28,12 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
           body: JSON.stringify({ emailId: username, password }),
         });
       }
-      const data = await response.text();
-      console.log(data);
-      if (isLoginMode) onAuthSuccess();
+      const data = await response.json()
+      if(data.success === true && isLoginMode) {
+        onAuthSuccess();
+      } else {
+        throw new Error(data.message);
+      }
     } catch (error) {
       console.error('Authentication failed', error);
     }

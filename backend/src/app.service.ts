@@ -5,28 +5,38 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AppService {
+  // eslint-disable-next-line prettier/prettier
   constructor(@InjectRedis() private readonly redis: Redis) { }
 
   getHello(): string {
     return 'Hello World!';
   }
 
-  async authenticateUser(emailId: string, password: string): Promise<string> {
+  async authenticateUser(emailId: string, password: string): Promise<any> {
     const userKey = `user:${emailId}`;
     const storedPassword = await this.redis.get(userKey);
     if (!storedPassword) return `User ${emailId} does not exist.`;
     const isMatch = await bcrypt.compare(password, storedPassword);
     if (isMatch) {
       if (storedPassword && storedPassword === password) {
-        return `User ${emailId} authenticated successfully.`;
+        return {
+          success: true,
+          message: `User ${emailId} authenticated successfully.`,
+        };
       }
-      return `Authentication failed for user ${emailId}.`;
+      return {
+        success: false,
+        message: `Authentication failed for user ${emailId}`,
+      };
     }
   }
 
-  async registerUser(emailId: string, password: string): Promise<string> {
+  async registerUser(emailId: string, password: string): Promise<any> {
     const hashedPassword = await bcrypt.hash(password, 10);
     await this.redis.set(`user:${emailId}`, hashedPassword);
-    return `User ${emailId} registered successfully.`;
+    return {
+      success: true,
+      message: `User ${emailId} registered successfully.`,
+    };
   }
 }
