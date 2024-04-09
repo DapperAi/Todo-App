@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { saveTasksToLocalStorage, loadTasksFromLocalStorage, updateTasksInBackend, getTasksInBackend } from './utils/localStorageUtils';
+import  { useState, useEffect } from 'react';
+import { updateTasksInBackend, getTasksInBackend } from './utils/localStorageUtils';
 import { Button, Tooltip } from '@nextui-org/react';
 
 import NewTaskForm from './components/interface/NewTaskForm';
@@ -7,18 +7,24 @@ import TaskList from './components/interface/TaskList';
 import TaskFilter from './components/interface/TaskFilter';
 import UserAuth from './components/interface/UserAuth';
 import { Task } from './dto';
+import UserProfile from './components/interface/UserProfile';
 
 const App = () => {
   const [filter, setFilter] = useState<string>('All');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const savedTasks = loadTasksFromLocalStorage();
-    return savedTasks ? savedTasks : [];
-  });
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [username, setUsername] = useState<string>('');
+
 
   useEffect(() => {
-    saveTasksToLocalStorage(tasks);
-  }, [tasks]);
+    if(isAuthenticated){
+      getTasksInBackend().then(res => {
+        if(res) {
+          setTasks(JSON.parse(res));
+        }
+      })
+    }
+  },[isAuthenticated])
 
   useEffect(() => {
     if(localStorage.getItem('token')) {
@@ -60,9 +66,14 @@ const App = () => {
   return (
     <div className="p-4 flex flex-col gap-4">
       {!isAuthenticated ? (
-        <UserAuth onAuthSuccess={() => setIsAuthenticated(true)} />
+        <UserAuth onAuthSuccess={(token: string, username: string) => {
+          localStorage.setItem('token', token);
+          setIsAuthenticated(true)
+          setUsername(username);
+        }} />
       ) : (
-        <div>
+        <div className='flex flex-col gap-4'>
+          <UserProfile username={username}/>
           <NewTaskForm onSubmit={addTask} />
           <TaskFilter value={filter} onChange={(e) => setFilter(e.target.value)} />
           <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />

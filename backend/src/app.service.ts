@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import Redis from 'ioredis';
 import * as bcrypt from 'bcrypt';
-import { Task } from './dto';
+import { Task, UserTask } from './dto';
 
 @Injectable()
 export class AppService {
@@ -72,7 +72,7 @@ export class AppService {
 
   async updateUserTasks(emailId: string, tasks: Task[]): Promise<any> {
     const userKey = `user:${emailId}`;
-    const isUserRegistered = (await this.redis.get(userKey)) != null;
+    const isUserRegistered = (await this.redis.get(userKey)) ? true : false;
     if (!isUserRegistered) {
       throw new Error('User not registered');
     }

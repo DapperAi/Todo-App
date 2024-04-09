@@ -1,12 +1,14 @@
-import React from 'react';
 import { Avatar } from '@nextui-org/react';
 
-// UserProfile displays the current user's profile with an avatar
-const UserProfile: React.FC = () => {
+type UserProfileProps = {
+  username: string;
+}
+
+const UserProfile = (props: UserProfileProps) => {
   return (
     <div className="flex items-center">
-      <Avatar text="JD" color="primary" />
-      <div className="ml-2">John Doe</div>
+      <Avatar isBordered color="primary" size="lg" src="https://i.pravatar.cc/150?u=a04258114e29026708c"/>
+      <div className="ml-2">{props.username}</div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpStatus, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Task } from './dto';
+import { Task, UserTask } from './dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Controller()
@@ -16,14 +16,18 @@ export class AppController {
   authenticate(
     @Body() body: { emailId: string; password: string },
   ): Promise<string> {
-    return this.appService.authenticateUser(body.emailId, body.password);
+    const res = this.appService.authenticateUser(body.emailId, body.password);
+    console.log('authentication request served successfully');
+    return res;
   }
 
   @Post('register')
   register(
     @Body() body: { emailId: string; password: string },
   ): Promise<string> {
-    return this.appService.registerUser(body.emailId, body.password);
+    const res = this.appService.registerUser(body.emailId, body.password);
+    console.log('register user request served successfully');
+    return res;
   }
 
   @Post('update-tasks')
@@ -41,9 +45,21 @@ export class AppController {
 
     try {
       const decoded = this.jwtService.verify(token);
-      return await this.appService.updateUserTasks(decoded.email, body.tasks);
+      body.tasks.forEach((t) => {
+        const ut = new UserTask(t);
+        if (!ut.validate()) {
+          throw new Error('Invalid task body');
+        }
+      });
+      const res = await this.appService.updateUserTasks(
+        decoded.email,
+        body.tasks,
+      );
+      console.log('update-tasks request served successfully');
+      return res;
     } catch (error) {
-      return { status: 401, message: 'Invalid token.' };
+      console.log(error);
+      return { status: 401, message: error.message };
     }
   }
 
@@ -59,7 +75,9 @@ export class AppController {
 
     try {
       const decoded = this.jwtService.verify(token);
-      return await this.appService.getUserTasks(decoded.email);
+      const res = await this.appService.getUserTasks(decoded.email);
+      console.log('tasks fetch request served successfully');
+      return res;
     } catch (err) {
       return { status: 401, message: 'Invalid token.' };
     }

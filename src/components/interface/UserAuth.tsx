@@ -4,7 +4,7 @@ import { Input, Button, Modal, ModalHeader, ModalBody } from "@nextui-org/react"
 // UserAuth handles user login and registration
 
 // UserAuth handles user login and registration
-const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
+const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: (token: string, username: string) => void }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -25,8 +25,7 @@ const UserAuth = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
           });
       const data = await response.json()
       if(data.success === true) {
-        onAuthSuccess();
-        localStorage.setItem('token', data.token);
+        onAuthSuccess(data.token, username);
       } else {
         throw new Error(data.message)
       }
