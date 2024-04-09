@@ -16,7 +16,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdate, onDelete }) => {
             <span>Status: {task.status}</span>
             <p>Due Date: {task.dueDate?.toString()}</p>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 flex-row gap-2">
             <Button color="secondary" onClick={() => onUpdate(index)}>Update Status</Button>
             <Button color="danger" onClick={() => onDelete(index)}>Delete</Button>
           </div>

@@ -19,12 +19,19 @@ const App = () => {
   useEffect(() => {
     if(isAuthenticated){
       getTasksInBackend().then(res => {
+        console.log(res);
+        console.log(tasks);
         if(res) {
           setTasks(JSON.parse(res));
         }
       })
     }
-  },[isAuthenticated])
+  },[isAuthenticated, tasks])
+  
+  useEffect(() => {
+    const un = localStorage.getItem('username') ?? "";
+    setUsername(un);
+  }, [username])
 
   useEffect(() => {
     if(localStorage.getItem('token')) {
@@ -34,7 +41,6 @@ const App = () => {
 
   const addTask = (task: Task) => {
     updateTasksInBackend([...tasks, task]);
-    getTasksInBackend();
     setTasks((currentTasks) => [...currentTasks, task]);
   };
 
@@ -68,6 +74,7 @@ const App = () => {
       {!isAuthenticated ? (
         <UserAuth onAuthSuccess={(token: string, username: string) => {
           localStorage.setItem('token', token);
+          localStorage.setItem('username', username);
           setIsAuthenticated(true)
           setUsername(username);
         }} />
@@ -81,7 +88,9 @@ const App = () => {
           <Tooltip content="Logout" placement="bottom" >
             <Button color="warning" onClick={() => {
                 localStorage.removeItem('token');
+                localStorage.removeItem('username')
                 setIsAuthenticated(false)
+                setTasks([]);
                 }
               }>
               Logout

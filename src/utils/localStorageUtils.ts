@@ -28,5 +28,7 @@ export const updateTasksInBackend = async (tasks: Task[]) => {
     },
     body: JSON.stringify({ tasks: tasks }),
   });
+
+  console.log(response.json())
   return response.json();
 };
