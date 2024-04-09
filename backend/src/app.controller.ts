@@ -46,4 +46,22 @@ export class AppController {
       return { status: 401, message: 'Invalid token.' };
     }
   }
+
+  @Get('tasks')
+  async getTasks(@Req() request: any): Promise<any> {
+    const authHeader = request.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token)
+      return {
+        status: HttpStatus.UNAUTHORIZED,
+        message: 'No token provided.',
+      };
+
+    try {
+      const decoded = this.jwtService.verify(token);
+      return await this.appService.getUserTasks(decoded.email);
+    } catch (err) {
+      return { status: 401, message: 'Invalid token.' };
+    }
+  }
 }

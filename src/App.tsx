@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { saveTasksToLocalStorage, loadTasksFromLocalStorage, updateTasksInBackend } from './utils/localStorageUtils';
+import { saveTasksToLocalStorage, loadTasksFromLocalStorage, updateTasksInBackend, getTasksInBackend } from './utils/localStorageUtils';
 import { Button, Tooltip } from '@nextui-org/react';
 
 import NewTaskForm from './components/interface/NewTaskForm';
@@ -20,8 +20,15 @@ const App = () => {
     saveTasksToLocalStorage(tasks);
   }, [tasks]);
 
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      setIsAuthenticated(true);
+    }
+  }, [isAuthenticated])
+
   const addTask = (task: Task) => {
-    updateTasksInBackend('user@example.com', [...tasks, task]); // Assuming 'user@example.com' is the logged-in user's email
+    updateTasksInBackend([...tasks, task]);
+    getTasksInBackend();
     setTasks((currentTasks) => [...currentTasks, task]);
   };
 
@@ -35,7 +42,7 @@ const App = () => {
         return updatedTasks;
       }
     );
-    updateTasksInBackend('user@example.com', updatedTasks);
+    updateTasksInBackend(updatedTasks);
   };
   
   const deleteTask = (index: number) => {
@@ -46,7 +53,7 @@ const App = () => {
         return remianingTasks;
       }
     );
-    updateTasksInBackend('user@example.com', remianingTasks);
+    updateTasksInBackend(remianingTasks);
   };
 
 
@@ -61,7 +68,11 @@ const App = () => {
           <TaskList tasks={tasks.filter(task => filter === 'All' || task.status === filter)} onUpdate={updateTaskStatus} onDelete={deleteTask} />
           <div className="flex justify-end mt-4">
           <Tooltip content="Logout" placement="bottom" >
-            <Button color="warning" onClick={() => setIsAuthenticated(false)}>
+            <Button color="warning" onClick={() => {
+                localStorage.removeItem('token');
+                setIsAuthenticated(false)
+                }
+              }>
               Logout
             </Button>
           </Tooltip>

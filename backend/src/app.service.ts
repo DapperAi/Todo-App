@@ -56,6 +56,20 @@ export class AppService {
     };
   }
 
+  async getUserTasks(emailId: string): Promise<any> {
+    const userKey = `user:${emailId}`;
+    const isUserRegistered = (await this.redis.get(userKey)) != null;
+    if (!isUserRegistered) {
+      throw new Error('User not registered');
+    }
+    const userTasksKey = `tasks:${emailId}`;
+    const tasks = await this.redis.get(userTasksKey);
+    return {
+      success: true,
+      tasks: tasks,
+    };
+  }
+
   async updateUserTasks(emailId: string, tasks: Task[]): Promise<any> {
     const userKey = `user:${emailId}`;
     const isUserRegistered = (await this.redis.get(userKey)) != null;
