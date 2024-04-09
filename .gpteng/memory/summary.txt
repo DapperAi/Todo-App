@@ -2,14 +2,14 @@
 Application Summary Document
 
 Description:
-The application is a task management system designed to help users efficiently organize and track their tasks. It has been enhanced to ensure secure and dynamic updates of tasks based on the logged-in user's actions, leveraging JWT for authentication.
+The application is a sophisticated task management system designed to assist users in organizing and tracking their tasks efficiently. It leverages JWT for secure authentication, ensuring that task updates are dynamically and securely synchronized based on the actions of the logged-in user.
 
 Main Features:
-1. Real-Time Task Updates: Supports immediate synchronization of task updates with the backend.
-2. Secure User Authentication: Utilizes JWT for secure user identification and task updates.
-3. Comprehensive Task Management: Enables creating, updating, and deleting tasks with backend synchronization.
-4. Personalized User Experience: Customizes task management based on the logged-in user's profile.
-5. Enhanced Security: Implements improved error handling for secure and reliable task updates.
+1. Real-Time Task Updates: Ensures immediate synchronization of task updates with the backend for up-to-date task management.
+2. Secure User Authentication: Utilizes JWT for robust user authentication, safeguarding user identity and task updates.
+3. Comprehensive Task Management: Allows users to create, update, and delete tasks, fully synchronized with the backend for a seamless experience.
+4. Personalized User Experience: Offers a customized task management experience tailored to the logged-in user's profile, enhancing usability.
+5. Enhanced Security: Features advanced error handling mechanisms for a more secure and reliable task management process.
 
 Current State:
-The application now securely identifies users through JWT tokens instead of request body parameters for task updates. This change enhances security by ensuring that tasks are updated based on the authenticated user's email extracted from the JWT token. The system now provides a more secure, efficient, and user-centric task management experience.
+After the latest iteration, the application has seen improvements in user interface aesthetics and usability. Specifically, the `UserProfile.tsx` component was updated to enhance the visual appeal and readability of the user profile section. This was achieved by centering the user's avatar and username horizontally using Tailwind CSS classes and improving the username's font size, weight, and color for better visibility. These changes contribute to a more engaging and user-friendly interface, complementing the application's robust task management and security features.
