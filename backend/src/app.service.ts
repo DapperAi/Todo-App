@@ -25,6 +25,7 @@ export class AppService {
     const isMatch = await bcrypt.compare(password, storedPassword);
     if (isMatch) {
       const payload = { email: emailId };
+      go;
       const token = this.jwtService.sign(payload);
       return {
         success: true,

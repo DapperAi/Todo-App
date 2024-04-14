@@ -8,7 +8,7 @@ type NewTaskFormProps = {
   onSubmit: (task: Task) => void;
 };
 // NewTaskForm allows users to create a new task with a title, description, and status
-const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
+const NewTaskForm = (props: NewTaskFormProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('To Do');
@@ -18,7 +18,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({ onSubmit }) => {
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (!title) return;
-    onSubmit({ title, description, status, dueDate,  reminder});
+    props.onSubmit({ title, description, status, dueDate,  reminder});
     setTitle('');
     setDescription('');
     setStatus('To Do'); 
